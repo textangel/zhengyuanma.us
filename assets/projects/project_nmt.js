@@ -1,36 +1,60 @@
-var $test = $('#project_nmt_box'),
-    $translate_box = $('#project_nmt_box2'),
-    $model_select_boxes = $('#nmt .actions li input')
+var $nmt_input_box = $('#project_nmt_box'),
+    $nmt_output_box = $('#project_nmt_box2'),
+    $nmt_model_select_boxes = $('#nmt #nmt_model_select li input')
+    $nmt_lang_select_boxes = $('#nmt #nmt_lang_select li input')
 
-var delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
-var nmt_api_mode = 'lstm';
+var punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
+var nmt_api_model = 'lstm_char';
+var nmt_api_lang = 'es_en';
 
-$model_select_boxes.on('click', event => {
+
+$nmt_model_select_boxes.on('click', event => {
     event.preventDefault();
     if (event.target.className == "primary"){
         if (event.target.value == "LSTM"){
-            nmt_api_mode = 'lstm';
+            nmt_api_model = 'lstm';
+            if ($nmt_input_box.val().length > 0)
+                getTranslationAPI($nmt_input_box.value);
         } else if (event.target.value == "Char LSTM"){
-            nmt_api_mode = 'lstm_char';
+            nmt_api_model = 'lstm_char';
+            if ($nmt_input_box.val().length > 0)
+                getTranslationAPI($nmt_input_box.value);
         }
-        $active_box = $('#nmt .actions li .active')[0];
+        $active_box = $('#nmt #nmt_model_select li .active')[0];
         $active_box.className = "primary";
         event.target.className = "active";
     }
 });
 
-$test.keyup(delay(function(event){
-    if(delimiter_codes.includes(event.keyCode)){
+$nmt_lang_select_boxes.on('click', event => {
+    event.preventDefault();
+    if (event.target.className == "primary"){
+        if (event.target.value == "SPA - ENG"){
+            nmt_api_lang = 'es_en';
+            if ($nmt_input_box.val().length > 0)
+                getTranslationAPI($nmt_input_box.value);
+        } else if (event.target.value == "ENG - SPA"){
+            nmt_api_lang = 'en_es';
+            if ($nmt_input_box.val().length > 0)
+                getTranslationAPI($nmt_input_box.value);
+        }
+        $active_box = $('#nmt #nmt_lang_select li .active')[0];
+        $active_box.className = "primary";
+        event.target.className = "active";
+    }
+});
+
+$nmt_input_box.keyup(delay(function(event){
+    if(punct_delimiter_codes.includes(event.keyCode)){
         if (this.value.length > 0)
             getTranslationAPI(this.value);
     }
 }, 200))
 
-
 function getTranslationAPI(inputText) {
     var matchList = [];
     var request = new XMLHttpRequest();
-    var url = 'http://35.239.212.207:5000/' + nmt_api_mode;
+    var url = 'https://api.zhengyuanma.us/api/nmt/' + nmt_api_model + "/" + nmt_api_lang;
     var params = "src_sent="+ inputText;
     request.open('GET', url + "?" + params, true);
     //Send the proper header information along with the request
@@ -39,10 +63,10 @@ function getTranslationAPI(inputText) {
 
     request.onreadystatechange = function() {
         if(request.readyState == 4 && request.status == 200) {
-            matches = request.responseText;
-            console.log(matches)
-            if (matches.length > 0) {
-                $translate_box.val(matches);
+            acp_matches = request.responseText;
+            console.log(acp_matches)
+            if (acp_matches.length > 0) {
+                $nmt_output_box.val(acp_matches);
             }
         }
     }

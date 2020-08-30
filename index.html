@@ -147,7 +147,7 @@
 								<h2 class="major">Contact</h2>
 								<p>
 									You can contact me through the form below or on the below social media. <br>
-									Form validated by CAPTCHAv3.</p>
+								</p>
 								<form id="contact-form">
 									<div class="fields">
 										<div class="field half">
@@ -164,7 +164,7 @@
 										</div>
 									</div>
 									<div class="error-show">
-										<p style="color:#FF0000";> </p>
+										<p style="color:#FF0000";>&nbsp </p>
 									</div>
 										<ul class="actions">
 											<li><input type="submit" value="Send Message" class="primary" /></li>
@@ -188,9 +188,6 @@
 							<!-- Project Autocomplete -->
 							<article id="autocomplete">
 								<h2 class="major">Autocomplete</h2>
-								<ul class="actions">
-									<li><input type="submit" value="Model Starting. Please Wait..." class="primary" id='autocomplete_load'/></li>
-								</ul>
 								<p>Key in some text, and the model will provide suggestions for the next word!</p>
 								<form action="#">
 									<div class="fields">
@@ -212,15 +209,28 @@
 								<h2 class="major">Neural Machine Translation</h2>
 								<span class="placeholder-container" style="position: relative;">
 									<p>
-									   Currently, models are trained for Spanish->English Translation.
+									   Currently, models are trained for Spanish to English or English to Spanish translation. The LSTM-Char model is more fluent and doesn't suffer from unknown words.
 									</p>
 									
 									<form action="#">
-										<ul class="actions", style="text-align: center;">
+										<div class="fields">
+										<div class="field half">
+										<label>Model</label>
+										<ul id="nmt_model_select" class="actions", style="text-align: center;">
 											<li><input type="submit" value="LSTM" class="primary"/></li>
 											<li><input type="submit" value="Char LSTM" class="active" /></li>
 											<!-- <li><input type="submit" value="Transformer" class="primary" /></li> -->
 										</ul>
+										</div>
+										<div class="field half">
+											<label>Langauge</label>
+										<ul id="nmt_lang_select" class="actions", style="text-align: center;">
+											<li><input type="submit" value="ENG - SPA" class="primary"/></li>
+											<li><input type="submit" value="SPA - ENG" class="active" /></li>
+											<!-- <li><input type="submit" value="Transformer" class="primary" /></li> -->
+										</ul>
+										</div>
+									</div>
 										<div class="fields">
 											<div class="field half">
 												<label for="project_nmt_box">Source Language: Spanish</label>
@@ -338,14 +348,16 @@
 							<article id="project_this_website">
 								<h2 class="major">About This Website </h2>
 								<p>
-									Doesn't really count as a project, but for documentation purposes:
+									For documentation purposes:
 								</p>	
-								<p>		This HTML/CSS/JavaScript/PHP website is hosted on Google Cloud, along with its application server.
-										SSL certificates and some security provided by Cloudflare.
+								<p>		This HTML/CSS/JavaScript/PHP website is hosted on two Google Cloud Ubuntu 18.04 instances acting as web and application servers.
+										SSL certificates, HTTPS, and anti-DDoS are provided by Cloudflare. Mail service is through Postfix with authentication
+										using Google ReCaptcha. 
 								</p> 
-								<p>			Neural Network Models were trained on Google Colab.
-										Other projects originally in Python are served using Flask and Gunicorn, or are served using Cortex.
-										All content is published using NGINX.
+								<p>		Neural Network Models were trained on Google Colab. APIs consisting of Python projects, including neural network projects,
+										are served using Flask and Gunicorn. All content is routed and published using NGINX.
+								</p> 
+								<p> 
 								</p> 
 						
 							</article>
