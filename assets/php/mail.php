@@ -25,6 +25,7 @@ if (isset($_POST) && isset($_POST["captcha-token"]) && !empty($_POST["captcha-to
     }
 }
 
+echo "CAPTCHA_SUCCESS";
 
 if (isset($_POST['email'])) {
 
@@ -92,6 +93,7 @@ if (isset($_POST['email'])) {
         'Reply-To: ' . $email . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
     @mail($email_to, $subject, $email_message, $headers);
+
 ?>
 
     <!-- include your success message below -->
