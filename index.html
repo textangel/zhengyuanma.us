@@ -125,7 +125,7 @@
 								<span class="image main"><img src="images/projects_img.jpg" alt="" /></span>
 								<h3>Natural Language Processing Projects</h3>
 								<ul>
-									<li id="autocomplete_link"><a href="#autocomplete">Text Autocomplete Using Roberta</a></li>
+									<li><a href="#autocomplete">Text Autocomplete Using Roberta</a></li>
 									<li><a href="#nmt">Neural Machine Translation</a></li>
 								</ul>
 								<h3>Data Mining Projects</h3>
@@ -133,36 +133,50 @@
 									<li><a href="#project_recsys">Recommender Systems</a></li>
 									<li><a href="#project_imdb">Profitable Movies</a></li>
 								</ul>
+								<h3>Other</h3>
+								<ul>
+									<li><a href="#project_this_website">About This Website</a></li>
+								</ul>
 							</article>
 						
 			
 						<!-- Contact -->
 							<article id="contact">
+								
+								
 								<h2 class="major">Contact</h2>
 								<p>
-									You can contact me through the form below or on the below social media.  <br> (Opens your email client for sending.)
-								<form enctype="text/plain" method="get" action="mailto:zhengma86@gmail.com?subject=subject&body=body">
+									You can contact me through the form below or on the below social media. <br>
+									Form validated by CAPTCHAv3.</p>
+								<form id="contact-form" method="post" action="#">
 									<div class="fields">
 										<div class="field half">
-											<label for="name">Subject</label>
+											<label for="subject">Subject</label>
 											<input type="text" name="subject" id="subject" placeholder="Subject "/>
 										</div>
+										<div class="field half">
+											<label for="email">Email</label>
+											<input type="text" name="email" id="email" placeholder="Email "/>
+										</div>
 										<div class="field">
-											<label for="body">Message</label>
-											<textarea name="body" id="body" rows="4" placeholder="Message "></textarea>
+											<label for="message">Message</label>
+											<textarea name="message" id="message" rows="4" placeholder="Message "></textarea>
 										</div>
 									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Reset" /></li>
-									</ul>
+										<ul class="actions">
+											<li><input type="submit" value="Send Message" class="primary" /></li>
+											<li><input type="reset" value="Reset" /></li>
+										</ul>
+										<input type="hidden" id="captcha-token" name="captcha-token" value="" />
 								</form>
+								
 								<ul class="icons">
 									<li><a href="https://www.linkedin.com/in/zhengma-341/" class="icon brands fa-linkedin"><span class="label">Twitter</span></a></li>
 									<li><a href="https://github.com/textangel" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
 									<li><a href="https://www.facebook.com/zhengyuan.ma/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
 									<li><a href="https://twitter.com/textangel" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 								</ul>
+								
 							</article>
 
 
@@ -171,8 +185,7 @@
 							<article id="autocomplete">
 								<h2 class="major">Autocomplete</h2>
 								<ul class="actions">
-									<li><input type="submit" value="Load Model" class="primary" id='autocomplete_load'/></li>
-									<li><input type="submit" value="Stop Model" class="primary" id='autocomplete_stop'/></li>
+									<li><input type="submit" value="Model Starting. Please Wait..." class="primary" id='autocomplete_load'/></li>
 								</ul>
 								<p>Key in some text, and the model will provide suggestions for the next word!</p>
 								<form action="#">
@@ -200,8 +213,8 @@
 									
 									<form action="#">
 										<ul class="actions", style="text-align: center;">
-											<li><input type="submit" value="LSTM" class="active"/></li>
-											<li><input type="submit" value="Char LSTM" class="primary" /></li>
+											<li><input type="submit" value="LSTM" class="primary"/></li>
+											<li><input type="submit" value="Char LSTM" class="active" /></li>
 											<!-- <li><input type="submit" value="Transformer" class="primary" /></li> -->
 										</ul>
 										<div class="fields">
@@ -215,6 +228,7 @@
 											</div>
 										</div>
 									</form>
+									Note: Models trained with love on Google Colab.
 								</span>
 							</article>
 
@@ -254,7 +268,7 @@
 								</form>
 							</article>
 					
-							<!-- Project Network Graph -->
+							<!-- Project Network Graph
 						<article id="project_vc_network" style="width: 80rem;">
 							<h2 class="major">Recommender Systems</h2>
 							<form action="#">
@@ -288,14 +302,48 @@
 									</div>
 								</div>
 							</form>
-						</article>
+						</article> -->
 
 							<!-- Project Network Graph -->
 							<article id="project_imdb">
 								<h2 class="major">Movie Profit </h2>
-								Imagine you are a producer. You want to make a movie that will make <b>a lot of money</b> (highest profit margin), but you're not sure as to what kind of movie to make.
-								This was the theme of a <a href="https://github.com/textangel/IMDB_master">project.</a>
+								<p>
+									Imagine you are a producer. You want to make a movie that will make <b>a lot of money</b> (highest profit margin), but you're not sure as to what kind of movie to make.
+								</p> 
+							<p> 
+								Fear no more.
+							</p>
+
+								<div class="dropdown">
+									<button class="dropbtn">Genre</button>
+									<div class="dropdown-content">
+									  <a href="#">Link 1</a>
+									  <a href="#">Link 2</a>
+									  <a href="#">Link 3</a>
+									  
+									</div>
+								  </div>
+
+
 								
+								
+								Part of this <a href="https://github.com/textangel/IMDB_master">project.</a>
+								
+							</article>
+							<!-- Project Network Graph -->
+							<article id="project_this_website">
+								<h2 class="major">About This Website </h2>
+								<p>
+									Doesn't really count as a project, but for documentation purposes:
+								</p>	
+								<p>		This HTML/CSS/JavaScript/PHP website is hosted on Google Cloud, along with its application server.
+										SSL certificates and some security provided by Cloudflare.
+								</p> 
+								<p>			Neural Network Models were trained on Google Colab.
+										Other projects originally in Python are served using Flask and Gunicorn, or are served using Cortex.
+										All content is published using NGINX.
+								</p> 
+						
 							</article>
 
 
@@ -319,6 +367,7 @@
 			<script src="assets/js/main.js"></script>
 			<script src="assets/projects/project_autocomplete.js"></script>
 			<script src="assets/projects/project_nmt.js"></script>
-
+			<script src="https://www.google.com/recaptcha/api.js?render=6LcEH8UZAAAAAF3j_tEIbO3_bJbFeLSs7lLv3XY2"></script>
+			<script src="assets/projects/mail.js"></script>
 	</body>
 </html>
