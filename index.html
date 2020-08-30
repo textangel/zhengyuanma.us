@@ -148,7 +148,7 @@
 								<p>
 									You can contact me through the form below or on the below social media. <br>
 									Form validated by CAPTCHAv3.</p>
-								<form id="contact-form" method="post" action="#">
+								<form id="contact-form">
 									<div class="fields">
 										<div class="field half">
 											<label for="subject">Subject</label>
@@ -163,11 +163,15 @@
 											<textarea name="message" id="message" rows="4" placeholder="Message "></textarea>
 										</div>
 									</div>
+									<div class="error-show">
+										<p style="color:#FF0000";> </p>
+									</div>
 										<ul class="actions">
 											<li><input type="submit" value="Send Message" class="primary" /></li>
 											<li><input type="reset" value="Reset" /></li>
 										</ul>
 										<input type="hidden" id="captcha-token" name="captcha-token" value="" />
+									
 								</form>
 								
 								<ul class="icons">
