@@ -30,10 +30,14 @@ $nmt_lang_select_boxes.on('click', event => {
     event.preventDefault();
     if (event.target.className == "primary"){
         if (event.target.value == "SPA - ENG"){
+            $('#nmt_src_sent_label').text("Source Language: Spanish")
+            $('#nmt_tgt_sent_label').text("Target Language: English")
             nmt_api_lang = 'es_en';
             if ($nmt_input_box.val().length > 0)
                 getTranslationAPI($nmt_input_box.value);
         } else if (event.target.value == "ENG - SPA"){
+            $('#nmt_src_sent_label').text("Source Language: English")
+            $('#nmt_tgt_sent_label').text("Target Language: Spanish")
             nmt_api_lang = 'en_es';
             if ($nmt_input_box.val().length > 0)
                 getTranslationAPI($nmt_input_box.value);

@@ -9,9 +9,10 @@ var $acp_input_box = $('#project1_box'),
     $acp_background_box = $('#project1_box2'),
     acp_results = document.getElementById("autocomplete-results"),
     acp_matches = [],
-    acp_length_lookback = 15,
+    acp_length_lookback = 40,
     punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
 
+    $temp = null;
 
 // Behavior for focus and blur to achieve the visual effect
 $acp_input_box.focus(function(){
@@ -32,8 +33,22 @@ $acp_input_box.focus(function(){
     if (event.keyCode == 9) { //tab
         $(this).focus();
         event.preventDefault();
-        if ($acp_background_box.val().length > 0)
-            $acp_input_box.val($acp_background_box.val());
+        var cand = $acp_background_box.val()
+        if (cand.length > 0){
+            if (cand.length > 1){
+                var c_m1 = cand.charAt(cand.length-1)
+                var c_m2 = cand.charAt(cand.length-2)
+                console.log(cand, c_m1, c_m2)
+                if (".,:!?".includes(c_m1) && c_m2 == " ") {
+                    var new_cand = cand.substring(0, cand.length - 1).trim() + c_m1;
+                    $acp_input_box.val(new_cand);
+                } else {
+                    $acp_input_box.val(cand);
+                }
+            } else {
+                $acp_input_box.val(cand);
+            }
+        }
         if (this.value.length > 0)
              getMatchesAPI(this.value);
     } else {
@@ -67,10 +82,8 @@ function getMatchesAPI(inputText) {
             if (acp_matches.length > 0) {
                 displayMatches (acp_matches, myChart);
             }
-            console.log(matchList)
         }
     }
-    return matchList
 }
 
 
@@ -80,6 +93,8 @@ function displayMatches (matchList, chart) {
     var acc = 0;
     var matchProbCum = matchList.map(val => acc = val[1] + acc)
     var random_select = matchList[matchProbCum.filter(val => val <= rand).length]
+    console.log(matchList)
+    $temp = matchList
     console.log(random_select)
     if (random_select.length > 0)
         $acp_background_box.val($acp_input_box.val().trim() + " " + random_select[0]);
