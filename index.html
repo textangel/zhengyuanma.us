@@ -5,7 +5,9 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/jquery-ui.min.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="assets/js/jquery.min.js"></script>
 	</head>
 	<body class="is-preload">
 
@@ -57,12 +59,13 @@
 									A list of some relevant coursework is as follows:
 									<ul style="text-align:left;">
 										<li><a href="http://web.stanford.edu/class/cs161/">CS161 Analysis of Algorithms</a>; <a href="https://explorecourses.stanford.edu/search?view=catalog&filter-coursestatus-Active=on&q=CS%20154:%20Introduction%20to%20Automata%20and%20Complexity%20Theory&academicYear=20182019">CS154 Automata and Complexity Theory</a></li>
-										<li><a href="https://stanford-cs221.github.io/spring2020/">CS221 Introduction to Artificial Intelligence</a> <span style="float:right;"><b>Python</b></span></li>
-										<li><a href="http://web.stanford.edu/class/cs224n/">CS224N Natural Langauge Processing with Deep Learning</a> [<a href="#course_cs224n"> Notes </a>] <span style="float:right;"><b>Python, PyTorch</b></span></li>
-										<li><a href="http://cs231n.stanford.edu/">CS231N Computer Vision; Convolutional Neural Networks</a>	 <span style="float:right;"><b>Python, Tensorflow</b></span></li>
-										<li><a href="http://web.stanford.edu/class/cs246/">CS246 Mining Massive Datasets</a>	<span style="float:right;"><b>Python, Spark, MapReduce</b></span></li>
+										<li><a href="https://stanford-cs221.github.io/spring2020/">CS221 Artificial Intelligence: Principles and Techniques</a> <span style="float:right;"><b>Python</b></span></li>
+										<li><a href="http://web.stanford.edu/class/cs234/">CS234 Reinforcement Learning</a>	<span style="float:right;">[<a href="#course_cs234"> Notes </a>] <b>Python</b></span></li>
+										<li><a href="http://cs231n.stanford.edu/">CS231N Computer Vision + Conv Neural Networks</a> <span style="float:right;">[<a href="#course_cs231n"> Notes </a>] <b>Python, Tensorflow</b></span></li>
+										<li><a href="http://web.stanford.edu/class/cs246/">CS246 Mining Massive Datasets</a>	 <span style="float:right;">[<a href="#course_cs246"> Notes </a>] <b>Python, Spark, MapReduce</b></span></li>
+										<li><a href="http://web.stanford.edu/class/cs224n/">CS224N Natural Langauge Processing + Deep Learning</a> <span style="float:right;"> [<a href="#course_cs224n"> Notes </a>] <b>Python, PyTorch</b></span></li>
 										<li><a href="http://web.stanford.edu/class/cs224w/">CS224W Deep Learning With Graphs</a> <span style="float:right;"><b>Python</b></span></li>
-										<li><a href="https://statweb.stanford.edu/~owen/courses/200/">STATS 200 Statistical Inference</a>; <a href="http://statweb.stanford.edu/~jtaylo/courses/stats203/">203 ANOVA</a><span style="float:right;"><b>R</b></span></li>
+										<li><a href="https://statweb.stanford.edu/~owen/courses/200/">STATS 200 Statistical Inference</a>; <a href="http://statweb.stanford.edu/~jtaylo/courses/stats203/">203 ANOVA</a><span style="float:right;">[<a href="#course_stats200"> Notes </a>] <b>R</b></span></li>
 										<li><a href="https://explorecourses.stanford.edu/search?view=catalog&filter-coursestatus-Active=on&page=0&catalog=&q=MS%26E+211%3A+Introduction+to+Optimization&collapse=">MS&E 211 Optimization</a>; <a href="https://web.stanford.edu/class/msande221/">221 Stochastic Modeling</a></li>
 										<li><a href="https://cs.stanford.edu/degrees/undergrad/Requirements.shtml#Core">Stanford CS Core (Data Structures and Systems)</a> <span style="float:right;"><b>Java, C, C++</b></span></li> 
 
@@ -78,7 +81,7 @@
 									<li style="padding-left: 0;"><b>Docker/K8S</b><span style="float:right;">Tools</span></li>
 									<li style="padding-left: 0;"><b>Collab Filtering, FM, FFM</b> 			<span style="float:right;">Recommender Systems</span></li>
 									<li style="padding-left: 0;"><b>Text Embedding, Seq2Seq, Transformer, BERT</b> <span style="float:right;">NLP</span></li>
-									<li style="padding-left: 0;"><b>C/C++, R, HTML/CSS, JavaScript, PHP</b><span style="float:right;">Exposure</span></li>
+									<li style="padding-left: 0;"><b>C/C++, R, HTML/CSS, JavaScript</b><span style="float:right;">Exposure</span></li>
 								</ul>
 
 									<p>I am a skilled <b>Python</b> developer, having worked for several years in the language. I also have signficant experience with the distributed computing stack, mostly through <b>Spark</b>, with exposure to Scala. I have experience using both RDD and SparkSQL APIs, Spark ETL on large datasets, and parallel Machine Learning using Spark libraries.
@@ -131,18 +134,18 @@
 								<span class="image main"><img src="images/projects_img.jpg" alt="" /></span>
 								<h3>Natural Language Processing Projects</h3>
 								<ul>
-									<li><a href="#autocomplete">Text Autocomplete Using Roberta</a></li>
+									<li><a href="#autocomplete">Text Autocomplete Using GPT2</a></li>
 									<li><a href="#nmt">Neural Machine Translation</a></li>
 								</ul>
 								
 								<h3>About this website</h3>	
-								<p>		I built this HTML/CSS/JavaScript/PHP website on two Google Cloud Ubuntu 18.04 instances acting as web and application servers.
+								<p>		I built this HTML/CSS/JavaScript website on two Google Cloud Ubuntu 18.04 instances acting as web and application servers.
 										SSL certificates, HTTPS, and anti-DDoS are provided by Cloudflare. 
-										<!-- Mail service is through Postfix with authentication using Google ReCaptcha. -->
 										
 								</p> 
 								<p>		I built the Neural Network Models on Google Colab. APIs consisting of Python projects, including neural network projects,
-										are served using Flask and Gunicorn. All content is routed and published using NGINX.
+										are served using Flask and Gunicorn. Site preprocessing done with Node.JS, including some Pub tempates. 
+										All content is routed and published using NGINX.
 								</p> 
 							
 							</article>
@@ -151,39 +154,12 @@
 						<!-- Contact -->
 							<article id="contact">
 							<center>
-								
 								<h2 class="major">Contact</h2>
 								<p>
 									You can contact me at <b>zhengma86@gmail.com</b>, or on the below social media.
 										
 								</p>
-								<!-- <form id="contact-form">
-									Comment out for now, Cloudflare won't support my mail server domain.
-									<div class="fields">
-										<div class="field half">
-											<label for="subject">Subject</label>
-											<input type="text" name="subject" id="subject" placeholder="Subject "/>
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" placeholder="Email "/>
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="4" placeholder="Message "></textarea>
-										</div>
-									</div>
-									<div class="error-show">
-										<p style="color:#FF0000";>&nbsp </p>
-									</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-										<input type="hidden" id="captcha-token" name="captcha-token" value="" />
-									
-								</form>
-								 -->
+							
 								 <form id="contact-form", action="mailto:zhengma86@gmail.com" style="text-align:center;">
 									<ul class="actions" style="display:inline-table;">
 										<li style="display:inline;"><input type="submit" value="Email Me" class="primary" /></li>
@@ -199,14 +175,58 @@
 							</article>
 						
 						<!-- Course Notes -->
-							<!-- <article id="course_cs224"> -->
-							<!-- </article>	 -->
+	
+							<article id="course_cs224n"></article>
+							<article id="course_cs231n"></article>
+							<article id="course_cs246"></article>
+							<article id="course_cs234"></article>
+							<article id="course_stats200"></article>
+							
+							<script>
+								$("#course_cs224n").load("./assets/courses/cs224n/index.html");
+								$("#course_cs231n").load("./assets/courses/cs231n/index.html");
+								$("#course_cs246").load("./assets/courses/cs246/index.html");
+								$("#course_cs234").load("./assets/courses/cs234/index.html");
+								$("#course_stats200").load("./assets/courses/stats200/index.html");
+							</script> 
 
 						<!-- Projects -->
 							<!-- Project Autocomplete -->
+							<article id="autocomplete_intro">
+								<p>
+									In 2019, Open-AI's <a href="https://openai.com/blog/better-language-models/">GPT-2</a> language model shook the internet.
+									GPT-2 is able to generalize the style of any writer, writing lucid, stylistic, and often coherent prose. It does this by generalizing on 
+										
+									What if you could write collaboratively with GPT-2, letting the machine augment your own creative potential?</p>
+									I fine-tuned GPT-2 on a dataset consisting of writings from various authors. Using this, I built an autocomplete app.<p></p>
+							</article>
+
 							<article id="autocomplete">
 								<h2 class="major">Autocomplete</h2>
-								<p>Key in some text, and the model will provide suggestions for the next word!</p>
+								<!-- <a href="#autocomplete_intro"><input type="submit" value="view intro" class="primary" /></a>
+
+								<p> -->
+								<!-- In 2019, Open-AI's <a href="https://openai.com/blog/better-language-models/">GPT-2</a> language model shook the internet.
+								GPT-2 is able to generalize the style of any writer, writing lucid, stylistic, and often coherent prose. 
+								I wanted to use GPT-2 to augment my own creative potential.
+								To that end, I fine-tuned GPT-2 on a dataset consisting of writings from various authors. 
+								I built the below app, which allows one to write collaboratively with GPT-2.
+								<p></p> -->
+
+								<form action="#">
+									<div class="fields">
+										<div class="field half">
+											Input an author's style to mimic:
+										</div>
+										<div class="field half">
+											<input id="authorLookup" name="authorLookup" type="text" />
+										</div>
+									</div>
+								<div id="autocomplete_authorLookup">
+									<p>The current author is <b>Abraham Lincoln</b>.</p>
+								</div>
+								</form>
+								<p><b>Instructions:</b> Text is generated whenever you type a space or puntuation. Tabs will automatically accept the proposed word.</p>
 								<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
 								<form action="#">
 									<div class="fields">
@@ -217,7 +237,7 @@
 											</span>
 											<script type="text/javascript" src="assets/js/chart.js/chart.js/dist/Chart.min.js"></script>
 											<canvas id="myChart" width="400" height="200"></canvas>
-											<ul id="autocomplete-results"></ul>
+											<!-- <ul id="autocomplete-results"></ul> -->
 										</div>
 									</div>
 								</form>
@@ -270,147 +290,26 @@
 								</span>
 							</article>
 
-							<!-- Project Recsys -->
-							<!-- <article id="project_recsys" style="width: 80rem;">
-								WIP Projects
-								<h2 class="major">Recommender Systems</h2>
-								<form action="#">
-									<div class="fields">
-										<div class="field">
-											<span class="placeholder-container" style="position: relative; width: 40rem;">
-												<p>In the large input field, input a list of User, Item Purchases in the format "User, Item", with one User-Item pair per line. <br>
-
-												Then, input a user or an item for which to look up recommendations, and select an algorithm with which to do the recommendation. 
-											</p>
-											<form>
-											<table>
-												<tr>
-												<td align="left"><textarea name="message" id="project2_box1" rows="10" placeholder="User Item Pairs (CSV)" ></textarea></td>
-												<td align="left"><textarea name="message" id="project2_box2" rows="10" placeholder="User Features (CSV Format)" ></textarea></td>
-												<td align="left"><textarea name="message" id="project2_box3" rows="10" placeholder="Item Features (CSV Format)" ></textarea></td>
-												</tr>
-											</table>
-											<ul class="actions">
-												<li><input type="submit" value="Upload" class="primary" /></li>
-												<li><input type="reset" value="Reset" /></li>
-												<li>&nbsp;	&nbsp;	&nbsp;	&nbsp; &nbsp;	&nbsp;	&nbsp;	&nbsp;</li>
-												<li><input type="submit" value="Collaborative Filtering" class="primary" /></li>
-											</ul>
-											<h3>User Or Item to Look Up</h3>
-											<input type="text" name="user_item" id="name" />
-											</form>
-											
-											
-											</span>
-										</div>
-									</div>
-								</form>
-							</article>
-					 -->
-							<!-- Project Network Graph
-						<article id="project_vc_network" style="width: 80rem;">
-							<h2 class="major">Recommender Systems</h2>
-							<form action="#">
-								<div class="fields">
-									<div class="field">
-										<span class="placeholder-container" style="position: relative; width: 40rem;">
-											<p>In the large input field, input a list of User, Item Purchases in the format "User, Item", with one User-Item pair per line. <br>
-
-											Then, input a user or an item for which to look up recommendations, and select an algorithm with which to do the recommendation. 
-										</p>
-										<form>
-										<table>
-											<tr>
-											<td align="left"><textarea name="message" id="project2_box1" rows="10" placeholder="User Item Pairs (CSV)" ></textarea></td>
-											<td align="left"><textarea name="message" id="project2_box2" rows="10" placeholder="User Features (CSV Format)" ></textarea></td>
-											<td align="left"><textarea name="message" id="project2_box3" rows="10" placeholder="Item Features (CSV Format)" ></textarea></td>
-											</tr>
-										</table>
-										<ul class="actions">
-											<li><input type="submit" value="Upload" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-											<li>&nbsp;	&nbsp;	&nbsp;	&nbsp; &nbsp;	&nbsp;	&nbsp;	&nbsp;</li>
-											<li><input type="submit" value="Collaborative Filtering" class="primary" /></li>
-										</ul>
-										<h3>User Or Item to Look Up</h3>
-										<input type="text" name="user_item" id="name" />
-										</form>
-										
-										
-										</span>
-									</div>
-								</div>
-							</form>
-						</article> -->
-
-							<!-- Project Network Graph
-							<article id="project_imdb">
-								<h2 class="major">Movie Profit </h2>
-								<p>
-									Imagine you are a producer. You want to make a movie that will make <b>a lot of money</b> (highest profit margin), but you're not sure as to what kind of movie to make.
-								</p> 
-							<p> 
-								Fear no more.
-							</p>
-
-								<div class="dropdown">
-									<button class="dropbtn">Genre</button>
-									<div class="dropdown-content">
-									  <a href="#">Link 1</a>
-									  <a href="#">Link 2</a>
-									  <a href="#">Link 3</a>
-									  
-									</div>
-								  </div>
-
-
-								
-								
-								Part of this <a href="https://github.com/textangel/IMDB_master">project.</a> 
-								
-							</article>-->
-
-							<!-- Project Network Graph -->
-							<!-- <article id="project_this_website">
-								<h2 class="major">About This Website </h2>
-								<p>
-									For documentation purposes:
-								</p>	
-								<p>		This HTML/CSS/JavaScript/PHP website is hosted on two Google Cloud Ubuntu 18.04 instances acting as web and application servers.
-										SSL certificates, HTTPS, and anti-DDoS are provided by Cloudflare. Mail service is through Postfix with authentication
-										using Google ReCaptcha. 
-								</p> 
-								<p>		Neural Network Models were trained on Google Colab. APIs consisting of Python projects, including neural network projects,
-										are served using Flask and Gunicorn. All content is routed and published using NGINX.
-								</p> 
-								<p> 
-								</p> 
-						
-							</article> -->
-
-
 					</div>
 
 				<!-- Footer -->
 					<footer id="footer">
-						
 					</footer>
-
 			</div>
 
 		<!-- BG -->
 			<div id="bg"></div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
+			
+			<script src="assets/js/jquery-ui.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/course_notes.js"></script>
-			<script src="assets/projects/project_autocomplete.js"></script>
+			<script src="assets/projects/autocomplete/project_autocomplete.js"></script>
 			<script src="assets/projects/project_nmt.js"></script>
 			<script src="https://www.google.com/recaptcha/api.js?render=6LcEH8UZAAAAAF3j_tEIbO3_bJbFeLSs7lLv3XY2"></script>
-			<!-- <script src="assets/projects/mail.js"></script> -->
 	</body>
 </html>
