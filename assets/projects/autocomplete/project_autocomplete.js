@@ -9,8 +9,9 @@ var $acp_input_box = $('#project1_box'),
     $acp_background_box = $('#project1_box2'),
     acp_matches = [],
     acp_length_lookback = 40,
+    acp_all_authors = null,
+    cur_author_string = "",
     punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
-
     $temp = null;
 
 // Behavior for focus and blur to achieve the visual effect
@@ -37,7 +38,7 @@ $acp_input_box.focus(function(){
             if (cand.length > 1){
                 var c_m1 = cand.charAt(cand.length-1)
                 var c_m2 = cand.charAt(cand.length-2)
-                console.log(cand, c_m1, c_m2)
+                // console.log(cand, c_m1, c_m2)
                 if (".,:!?".includes(c_m1) && c_m2 == " ") {
                     var new_cand = cand.substring(0, cand.length - 1).trim() + c_m1;
                     $acp_input_box.val(new_cand);
@@ -60,7 +61,7 @@ $acp_input_box.focus(function(){
 $tmp = null
 
 function getMatchesAPI(inputText) {
-    var last_tokens = inputText //.split(" ").slice(0).slice(-1 * acp_length_lookback).join(' ').toLowerCase() 
+    var last_tokens = processInputTextGPT2(inputText, cur_author_string, 10)
     console.log('last_tokens', last_tokens)
     var matchList = [];
     var request = new XMLHttpRequest();
@@ -72,7 +73,7 @@ function getMatchesAPI(inputText) {
 
     request.onreadystatechange = function() {//Call a function when the state changes.
         if(request.readyState == 4 && request.status == 200) {
-            console.log(request.responseText)
+            // console.log(request.responseText)
             $tmp = request.responseText
             api_response = JSON.parse(request.responseText);
             
@@ -86,16 +87,14 @@ function getMatchesAPI(inputText) {
 
             acp_sample_token = api_response["sample_token"];
 
-            // acp_matches = api_response["all_results"];
-            // acp_matches10 = api_response["top10"];
             if (acp_matches.length > 0) {
                 displaySampledMatches (acp_sample_token);
-                // displayMatches (acp_matches);
                 updateChart(acp_matches10, myChart);
             }
         }
     }
 }
+
 acp_last_token = ' '
 function displaySampledMatches (sample_token) {
     if (acp_last_token.includes("\n"))
@@ -105,27 +104,45 @@ function displaySampledMatches (sample_token) {
     acp_last_token = sample_token
 }
 
-function displayMatches (matchList) {
-    var sum_prob = matchList.reduce((acc,val) => acc+val[1], 0);
-    var rand = Math.random() * sum_prob;
-    var acc = 0;
-    var matchProbCum = matchList.map(val => acc = val[1] + acc)
-    var random_select = matchList[matchProbCum.filter(val => val <= rand).length]
-    console.log(matchList)
-    $temp = matchList
-    console.log(random_select)
-    if (random_select.length > 0)
-        $acp_background_box.val($acp_input_box.val().trim() + " " + random_select[0]);
-    else
-        $acp_background_box.val($acp_input_box.val().trim() + " " + matchList[0][0]);
+
+function processInputTextGPT2(inputText, cur_author_string, num_lines){
+    if (num_lines <=0) num_lines = 10
+    const split_text_max_len = 70
+    split_Text = inputText.split("\n")
+    final_text = []
+    for (ix in split_Text){
+        if(split_Text[ix].length > split_text_max_len){
+            total_len = 0
+            cur_split = []
+            space_split = split_Text[ix].split(" ")
+            for (ix2 in space_split){
+                if (total_len + space_split[ix2].length <= split_text_max_len){
+                    cur_split.push(space_split[ix2])
+                    total_len += space_split[ix2].length
+                } else {
+                    final_text.push(cur_author_string + " " + cur_split.join(" ").trim())
+                    total_len = 0
+                    cur_split = []
+                }
+            }
+            if (cur_split.length > 0)
+                final_text.push(cur_author_string + " " + cur_split.join(" ").trim())
+        } else{
+            final_text.push(cur_author_string + " " + split_Text[ix].trim())
+        }
+    }
+    final_text = final_text.slice(Math.max(final_text.length-num_lines, 0))
+    return final_text.join("\n")
 }
+
+  
 
 function updateChart(top10List, chart) {
     chart.data.datasets[0].data = top10List.map((x) => x[1]);
     chart.data.labels= top10List.map((x) => x[0]);
     chart.update();
 
-    console.log(myChart.data);
+    // console.log(myChart.data);
 }
 
 // Helper Functions
@@ -140,6 +157,55 @@ function delay(callback, ms) {
     };
   }
 
+function chunkString(str, length) {
+    return str.match(new RegExp('.{1,' + length + '}', 'g'));
+}
+
+
+
+$('#authorLookupForm').submit(function(event){
+    event.preventDefault();
+    author_name = $('#authorLookup').val()
+    console.log(author_name)
+    if (Object.keys(acp_all_authors).includes(author_name)){
+        possible_cats = acp_all_authors[author_name]
+        selected_cat = possible_cats[Math.floor(Math.random() * possible_cats.length)]
+        updateCurrentAuthor(author_name, selected_cat)
+    }
+    
+})
+
+function updateCurrentAuthor(author_name, author_cat){
+    cur_author_string = author_cat + "| "+author_name+" ??>>>"
+    $('#authorDisplay p b').text(author_name)
+}
+updateCurrentAuthor("Abraham Lincoln", "E456")
+
+
+//Dropdown many with authors
+$.getJSON("./assets/projects/autocomplete/authors_category.json", function(authors){
+    acp_all_authors = authors;
+    authors_names = Object.keys(authors);
+    var $input = $("#authorLookup").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(authors_names, request.term);
+            response(results.slice(0, 10));
+        },
+        select: function (event, ui) {
+            $(this).val(ui.item.value);
+            $('#authorLookupForm').submit();
+            event.stopPropagation()
+        }
+    });
+});
+
+
+$(".autocomplete").select(function(event){
+    event.preventDefault()
+})
+
+
+/* Displays*/
 // CSS Styling for the Overlapping Boxes
 $acp_input_box.css({
     position: 'absolute',
@@ -188,28 +254,4 @@ var myChart = new Chart(ctx, {
             }]
         }
     }
-});
-
-//Getting a random line from the file to initialize the textbox
-
-
-// function getRandomLine(filename){
-//     fs.readFile(filename, function(err, data){
-//       if(err) throw err;
-//       var lines = data.split('\n');
-//       /*do something with */ lines[Math.floor(Math.random()*lines.length)];
-//    })
-//   }
-  
-//   getRandomLine("./assets/projects/autocomplete/random_en_sentences.txt")
-
-//Dropdown many with authors
-$.getJSON("./assets/projects/autocomplete/authors_category.json", function(authors){
-    authors_names = Object.keys(authors);
-    $("#authorLookup").autocomplete({
-        source: function(request, response) {
-            var results = $.ui.autocomplete.filter(authors_names, request.term);
-            response(results.slice(0, 10));
-        }
-    });
 });

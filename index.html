@@ -213,18 +213,18 @@
 								I built the below app, which allows one to write collaboratively with GPT-2.
 								<p></p> -->
 
-								<form action="#">
+								<form id="authorLookupForm" action="#">
 									<div class="fields">
 										<div class="field half">
 											Input an author's style to mimic:
 										</div>
 										<div class="field half">
-											<input id="authorLookup" name="authorLookup" type="text" />
+										<input id="authorLookup" type="text" />
 										</div>
 									</div>
-								<div id="autocomplete_authorLookup">
-									<p>The current author is <b>Abraham Lincoln</b>.</p>
-								</div>
+									<div id="authorDisplay">
+										<p>The current author is <b>   </b>.</p>
+									</div>
 								</form>
 								<p><b>Instructions:</b> Text is generated whenever you type a space or puntuation. Tabs will automatically accept the proposed word.</p>
 								<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
@@ -232,8 +232,8 @@
 									<div class="fields">
 										<div class="field">
 											<span class="placeholder-container" style="position: relative;">
-												<textarea name="message" id="project1_box" rows="10" placeholder="Enter Some Text" ></textarea>
-												<textarea name="message" id="project1_box2" rows="10" placeholder="" ></textarea>
+												<textarea name="message" id="project1_box" rows="10" placeholder="Enter Some Text" maxlength="3250"></textarea>
+												<textarea name="message" id="project1_box2" rows="10" placeholder="" maxlength="3250"></textarea>
 											</span>
 											<script type="text/javascript" src="assets/js/chart.js/chart.js/dist/Chart.min.js"></script>
 											<canvas id="myChart" width="400" height="200"></canvas>
