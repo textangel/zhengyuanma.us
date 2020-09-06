@@ -8,11 +8,12 @@
 var $acp_input_box = $('#project1_box'),
     $acp_background_box = $('#project1_box2'),
     acp_matches = [],
-    acp_length_lookback = 40,
     acp_all_authors = null,
     cur_author_string = "",
     punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
     $temp = null;
+    inside_tab_processing = false;
+    invisible_char = "\ufeff";
 
 // Behavior for focus and blur to achieve the visual effect
 $acp_input_box.focus(function(){
@@ -31,26 +32,27 @@ $acp_input_box.focus(function(){
      }
  }, 200)).keydown(function(event) { 
     if (event.keyCode == 9) { //tab
-         $(this).focus();
-        event.preventDefault();
-        var cand = $acp_background_box.val()
-        if (cand.length > 0){
-            if (cand.length > 1){
-                var c_m1 = cand.charAt(cand.length-1)
-                var c_m2 = cand.charAt(cand.length-2)
-                // console.log(cand, c_m1, c_m2)
-                if (".,:!?".includes(c_m1) && c_m2 == " ") {
-                    var new_cand = cand.substring(0, cand.length - 1).trim() + c_m1;
-                    $acp_input_box.val(new_cand);
-                } else {
+        if (!inside_tab_processing){
+            inside_tab_processing = true;
+            $(this).focus();
+            event.preventDefault();
+            var cand = $acp_background_box.val()
+            if (cand.length > 0){
+                if (cand.length > 1){
+                    var c_m1 = cand.charAt(cand.length-1)
+                    var c_m2 = cand.charAt(cand.length-2)
+                    // console.log(cand, c_m1, c_m2)
+                    if (".,:!?".includes(c_m1) && c_m2 == " ") {
+                        var new_cand = cand.substring(0, cand.length - 1).trim() + c_m1;
+                        $acp_input_box.val(new_cand);
+                    } else 
+                        $acp_input_box.val(cand);
+                } else
                     $acp_input_box.val(cand);
-                }
-            } else {
-                $acp_input_box.val(cand);
             }
+            if (this.value.length > 0)
+                getMatchesAPI(this.value);
         }
-        if (this.value.length > 0)
-             getMatchesAPI(this.value);
     } else {
         $acp_background_box.val('');
     }
@@ -83,25 +85,33 @@ function getMatchesAPI(inputText) {
             for (ix in acp_matches)
                 acp_matches_.push([acp_matches[ix][0], parseFloat(acp_matches[ix][1])]);
             acp_matches = acp_matches_
-            acp_matches10 = acp_matches.slice(Math.max(acp_matches.length - 20, 0))
-
+            acp_matches_top_k = acp_matches.slice(Math.max(acp_matches.length - 20, 0))
             acp_sample_token = api_response["sample_token"];
-
             if (acp_matches.length > 0) {
-                displaySampledMatches (acp_sample_token);
-                updateChart(acp_matches10, myChart);
+                displaySampledMatches (acp_sample_token, acp_matches_top_k);
+                updateChart(acp_matches_top_k, myChart);
             }
         }
+        if (inside_tab_processing == true)
+            inside_tab_processing = false;
     }
 }
 
-acp_last_token = ' '
-function displaySampledMatches (sample_token) {
-    if (acp_last_token.includes("\n"))
-        $acp_background_box.val($acp_input_box.val() + sample_token);
-    else
+function displaySampledMatches (sample_token, topk_matches) {
+    var last_whitespace = $acp_input_box.val().match(/\s+$/)
+    if (last_whitespace && last_whitespace[0].includes("\n")){
+        if (sample_token.match(/\s+/)){
+            for (var i = topk_matches.length-1; i >= 0; i--){
+                if (/^[a-zA-Z]+$/.test(topk_matches[i][0].trim())){ //only contains alpha, and at least one alpha char
+                    sample_token = topk_matches[i][0]
+                    $acp_background_box.val($acp_input_box.val() + sample_token);
+                    break;
+                }
+            }
+        } else 
+            $acp_background_box.val($acp_input_box.val() + sample_token);
+    } else
         $acp_background_box.val($acp_input_box.val().trim() + sample_token);
-    acp_last_token = sample_token
 }
 
 
@@ -136,33 +146,14 @@ function processInputTextGPT2(inputText, cur_author_string, num_lines){
 }
 
   
-
-function updateChart(top10List, chart) {
-    chart.data.datasets[0].data = top10List.map((x) => x[1]);
-    chart.data.labels= top10List.map((x) => x[0]);
+function updateChart(topKList, chart) {
+    chart.data.datasets[0].data = topKList.map((x) => x[1]);
+    chart.data.labels= topKList.map((x) => x[0]);
     chart.update();
-
-    // console.log(myChart.data);
-}
-
-// Helper Functions
-function delay(callback, ms) {
-    var timer = 0;
-    return function() {
-      var context = this, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        callback.apply(context, args);
-      }, ms || 0);
-    };
-  }
-
-function chunkString(str, length) {
-    return str.match(new RegExp('.{1,' + length + '}', 'g'));
 }
 
 
-
+// Updating the Current Author
 $('#authorLookupForm').submit(function(event){
     event.preventDefault();
     author_name = $('#authorLookup').val()
@@ -203,6 +194,22 @@ $.getJSON("./assets/projects/autocomplete/authors_category.json", function(autho
 $(".autocomplete").select(function(event){
     event.preventDefault()
 })
+
+// Helper Functions
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+  }
+
+function chunkString(str, length) {
+    return str.match(new RegExp('.{1,' + length + '}', 'g'));
+}
 
 
 /* Displays*/
