@@ -1014,11 +1014,12 @@ input, select, textarea {
 				border-top: 0;
 			}
 
-/* Button */
+/* Button, Dropdown button*/
 
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
+	.dropbtn,
 	button,
 	.button {
 		-moz-appearance: none;
@@ -1693,11 +1694,11 @@ input, select, textarea {
 
 /* Dropdown Menu */
 .dropbtn {
-	background-color: #4CAF50;
-	color: white;
-	padding: 16px;
-	font-size: 16px;
-	border: none;
+	background-color: transparent;
+	color: #ffffff !important;
+	padding: 0 1.25rem 0 1.35rem;
+	font-size: 0.8rem;
+	border: 0;
 	cursor: pointer;
 	}
 	
@@ -1733,7 +1734,3 @@ input, select, textarea {
 	display: block;
 	}
 	
-	/* Change the background color of the dropdown button when the dropdown content is shown */
-	.dropdown:hover .dropbtn {
-	background-color: #3e8e41;
-	}
