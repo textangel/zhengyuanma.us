@@ -5,11 +5,18 @@ function display_image(canvas_name) {
     var img_input_id = "finput_" + canvas_name
     
     var imgcanvas = document.getElementById(img_canvas_id);
-    var fileinput = document.getElementById(img_input_id);
+    var fileinput = document.getElementById(img_input_id).files[0];
+    const reader = new FileReader();
     console.log(imgcanvas, fileinput)
     
-    imgcanvas.src = window.URL.createObjectURL(fileinput.files[0])
-    imgcanvas.style.display="inline"
+    reader.addEventListener("load", function(){
+        imgcanvas.src = reader.result;
+        imgcanvas.style.display="inline"
+    }, false)
+
+    if (fileinput) {
+        reader.readAsDataURL(fileinput);
+    }
 }
 
 $("#style_transfer_img_submit").submit(function(event){
