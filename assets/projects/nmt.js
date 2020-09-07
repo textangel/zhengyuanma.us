@@ -1,8 +1,8 @@
 var $nmt_input_box = $('#project_nmt_box'),
     $nmt_output_box = $('#project_nmt_box2'),
-    $nmt_model_select_boxes = $('#nmt #nmt_model_select li input')
-    $nmt_lang_select_boxes = $('#nmt #nmt_lang_select li input')
-
+    $nmt_model_select_boxes = $('#nmt #nmt_model_select li input'),
+    $nmt_lang_select_boxes = $('#nmt #nmt_lang_select li input'),
+    banned_words = ["Disponible inconsciente.", "It is independent."]
 var punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
 var nmt_api_model = 'lstm_char';
 var nmt_api_lang = 'es_en';
@@ -69,7 +69,7 @@ function getTranslationAPI(inputText) {
         if(request.readyState == 4 && request.status == 200) {
             acp_matches = request.responseText;
             console.log(acp_matches)
-            if (acp_matches.length > 0) {
+            if (acp_matches.length > 0 && !banned_words.includes(acp_matches.trim())) {
                 $nmt_output_box.val(acp_matches);
             }
         }
