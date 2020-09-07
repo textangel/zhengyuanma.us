@@ -24,7 +24,7 @@
 								<br>
 								Stanford B.S. Comp Science
 								<br>
-								<a href="/docs/2020-resume.pdf"">View My CV Here</a>
+								<a href="/docs/2020-resume.pdf">View My CV Here</a>
 								</p>
 							</div>
 						</div>
@@ -137,6 +137,10 @@
 									<li><a href="#autocomplete">Text Autocomplete Using GPT2</a></li>
 									<li><a href="#nmt">Neural Machine Translation</a></li>
 								</ul>
+								<h3>Data Mining Projects</h3>
+								<ul>
+									<li><a href="#imdb">Machine Learning Movie Profit Prediction</a></li>
+								</ul>
 								
 								<h3>About this website</h3>	
 								<p>		I built this HTML/CSS/JavaScript website on two Google Cloud Ubuntu 18.04 instances acting as web and application servers.
@@ -144,7 +148,7 @@
 										
 								</p> 
 								<p>		I built the Neural Network Models on Google Colab. APIs consisting of Python projects, including neural network projects,
-										are served using Flask and Gunicorn. Site preprocessing done with Node.JS, including some Pub tempates. 
+										are served using Flask and Gunicorn. Site preprocessing done with Node.JS. 
 										All content is routed and published using NGINX.
 								</p> 
 							
@@ -226,7 +230,7 @@
 										<p>The current author is <b>   </b>.</p>
 									</div>
 								</form>
-								<p><b>Instructions:</b> Text is generated whenever you type a space or puntuation. Tabs will automatically accept the proposed word.</p>
+								<p><b>Instructions:</b> Text is generated whenever you type a space or punctuation. Tabs will automatically accept the proposed word.</p>
 								<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
 								<form action="#">
 									<div class="fields">
@@ -289,6 +293,66 @@
 									Note: Models trained with love on Google Colab.
 								</span>
 							</article>
+							<!-- Project IMDB -->
+							<article id="imdb">
+								<h2 class="major">Movie Profit Prediction</h2>
+								<form action="https://github.com/textangel/IMDB_master" style="text-align:center;">
+									<ul class="actions" style="display:inline-table;">
+										<li style="display:inline;"><input type="submit" value="Link to Project (Github)" class="primary" /></li>
+									</ul>
+								</form>
+								<span class="placeholder-container" style="position: relative;">
+									<p>I performed varied feature generation and trained tree-based and SVM regression models to predict the financial success of movies using publicly available information. </p>
+									
+									<h4 class="major">Feature Generation</h4>
+									I employed various feature generation techniques including:
+									<ul>
+										<li> <a href="https://github.com/textangel/IMDB_master/blob/master/4%20Keyword%20Processing.ipynb">Training word embeddings</a> on keywords extracted from movie overviews.</li>
+										<li> Movie Embeddings using PCA dimensionality reduced TF-IDF compositions of the keyword embeddings.</li>
+										<li> Running PageRank on actor-actor graph to generate actor popularity features.</li>
+
+									</ul>
+
+									<h4 class="major">Modeling Methodology</h4>
+									<div><a href="https://github.com/textangel/IMDB_master/blob/master/5%20Model%20Training.ipynb">I ran the generated features</a> through some sklearn regression pipelines using:</div>
+									<ul>
+										<li> SVMRegressor and RandomForestRegressor as base models.</li>
+										<li> LASSO (L1) regularization for automated feature selection.</li>
+										<li> Beam search for hyperparameter tuning</li>
+										<li> Different subsets of input features for sensitivity analysis.</li>
+									</ul>
+									<p>As a modeling constraint, it was important that the target column is uncorrelated with other metrics to begin with. In my modeling, I eventually discovered that profits and budgets seemed to have an exponential relationship, that is, log(profits) was linearly correlated with log(budgets). This led to the finding that log(profits/budgets) was not correlated with budgets at all, and was a suitable metric to predict for.</p>
+									<p>This project is meant as a showcase of statistical machine learning, model building, and data processing.</p>
+								</span>
+							</article>
+
+							<!-- Project Style Transfer -->
+							<article id="style_transfer">
+								<h2 class="major">Image Style Transfer</h2>
+								<form id="style_transfer_img_submit" action="upload.php", method="post", enctype="multipart/form-data">
+								<field>
+									<div>
+										<div>
+										<input type="file" multiple="false" accept="image/*" id="finput_base" onchange="display_image('base') ">
+										<img id="img_canvas_base" src="#" alt="your image" style="display:none; max-width: 160px; max-height: 120px; border: none;"/>
+									</div>
+									<div>
+										<input type="file" multiple="false" accept="image/*" id="finput_style" onchange="display_image('style') ">
+										<img id="img_canvas_style" src="#" alt="your image" style="display:none; max-width: 160px; max-height: 120px; border: none;"/>
+									</div>	
+									<div id=style_transfer_error>
+										&nbsp;
+									</div>
+								</div>
+								</field>
+								<p></p>
+								<field>
+									<input type="submit" class="primary" value="Run Style Transfer" />
+								</field>
+								</form>
+								<h3 class="major"> Style Transfer Result</h2>
+								<img id="img_canvas_style" src="#" alt="your image" style="display:none; max-width: 160px; max-height: 120px; border: none;"/>
+							</article>
 
 					</div>
 
@@ -301,15 +365,15 @@
 			<div id="bg"></div>
 
 		<!-- Scripts -->
-			
 			<script src="assets/js/jquery-ui.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/course_notes.js"></script>
-			<script src="assets/projects/autocomplete/project_autocomplete.js"></script>
-			<script src="assets/projects/project_nmt.js"></script>
-			<script src="https://www.google.com/recaptcha/api.js?render=6LcEH8UZAAAAAF3j_tEIbO3_bJbFeLSs7lLv3XY2"></script>
+			<script src="assets/projects/autocomplete/autocomplete.js"></script>
+			<script src="assets/projects/nmt.js"></script>
+			<script src="assets/projects/image_style_transfer/image_style_transfer.js"></script>
+			<!-- <script src="https://www.google.com/recaptcha/api.js?render=6LcEH8UZAAAAAF3j_tEIbO3_bJbFeLSs7lLv3XY2"></script> -->
 	</body>
 </html>
