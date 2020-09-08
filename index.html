@@ -335,7 +335,7 @@
 							<!-- Project Style Transfer -->
 							<article id="style_transfer">
 								<h2 class="major">Image Style Transfer</h2>
-								Note: Mobile is currently not supported.
+							
 								<form id="style_transfer_img_submit" action="#">
 								<div class="fields", style="text-align: center;">
 									<div class="field half">
@@ -350,20 +350,32 @@
 										<p></p>
 										<img id="img_canvas_style" src="" alt="your image" style="display:none; max-width: 160px; max-height: 120px; border: none; margin-left: auto; margin-right: auto;"/>
 									</div>	
+									<!-- <div>
+										<br>
+										<p>&nbsp;</p>
+										<br>
+										<p>&nbsp;</p>
+										<br>
+									</div> -->
+								</div>
 									<div style="margin:auto" id=style_transfer_error>
 										 &nbsp;
 									</div>
-								</div>
 									<p></p>
 									<div style="text-align: center;">
 										<input type="submit" class="primary" value="Run Style Transfer" style="display:inline; text-align:center" />
 									</div>
+									
+								
 								
 								<p></p>
 								<h3 id="style_transfer_result_header" style="display:none; margin:auto; text-align:center;"> Style Transfer Result</h2>
 								<p></p>
 								<img id="img_canvas_result" src="" alt="your image" style="display:none; max-width: 320px; max-height: 240px; border: none; margin-left: auto; margin-right: auto;"/>
 							</form>
+							<div id="style_transfer_resource_warning" style="display:none;">
+								Notes on usage: Servers are expensive! To limit resource usage the app is limited to a few concurrent requests and memory limitations. If you hit those limitations you may get a message asking you to try again later; Don't worry, the app will be available again in not too long! Also please note, images must .jpg or  .png with correct file extensions, and the total size of both images should be less than 15MB.
+							</div>	
 							</article>
 
 					</div>
