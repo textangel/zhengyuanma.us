@@ -115,7 +115,7 @@ $.getJSON(acp_authors_category_list_path, function(authors){
 $('#authorLookupForm').submit(function(event){
     event.preventDefault();
     author_name = $('#authorLookup').val()
-    console.log(author_name)
+    // console.log(author_name)
     if (Object.keys(acp_all_authors).includes(author_name)){
         updateCurrentAuthorRandomCat(author_name)
     }
@@ -143,7 +143,7 @@ function processInputTextGPT2(inputText, acp_gpt2_author_id_string, max_lines_to
     // First we split along any newlines already present in the text
     split_Text = inputText.split("\n") 
     final_text = []
-    console.log( "final_text_pre: ", split_Text)
+    // console.log( "final_text_pre: ", split_Text)
     for (ix in split_Text){
         //Then for every line in the split text, if it is longer than `split_text_max_len` we
         //split it by spaces and traverse it, adding words until the resultant line is longer than `split_text_max_len` 
@@ -164,20 +164,20 @@ function processInputTextGPT2(inputText, acp_gpt2_author_id_string, max_lines_to
                 } else {
                     // When it is longer than `split_text_max_len`, we break at this point, join the line and add the line to our final list of lines.
                     // Note that whenever we add a new line, we append the `acp_gpt2_author_id_string` to it first.
-                    console.log(cur_split.join(" "),"\n", cur_split.join(" ").trim())
+                    // console.log(cur_split.join(" "),"\n", cur_split.join(" ").trim())
                     final_text.push(acp_gpt2_author_id_string + " " + cur_split.join(" ").trim())
                     total_len = space_split[ix2].length
                     cur_split = [space_split[ix2]]
                 }
             }
             if (cur_split.length > 0)
-                console.log(cur_split.join(" "), cur_split.join(" ").trim())
+                // console.log(cur_split.join(" "), cur_split.join(" ").trim())
                 final_text.push(acp_gpt2_author_id_string + " " + cur_split.join(" ").trim()) //Add back the leftover line in last iteration
         }
     }
     //We only keep the last `max_lines_to_keep` lines
     final_text = final_text.slice(Math.max(final_text.length-max_lines_to_keep, 0))
-    console.log( "final_text_post: ", final_text)
+    // console.log( "final_text_post: ", final_text)
     
     // We join the list of lines back by "\n" to send to the server.
     return final_text.join("\n")
@@ -193,7 +193,7 @@ function processInputTextGPT2(inputText, acp_gpt2_author_id_string, max_lines_to
 function getMatchesAPI(inputText) {
     // Preprocess the text
     var last_tokens = processInputTextGPT2(inputText, acp_gpt2_author_id_string, acp_max_input_lines_to_send_to_api)
-    console.log(last_tokens)
+    // console.log(last_tokens)
     
     //Set Up The Request
     var matchList = [];
@@ -281,7 +281,7 @@ $acp_input_box.focus(function(){
                 // If the proposed text is a space and then a punctuation, remove the space and update the input box
                 var c_m1 = cand.charAt(cand.length-1)
                 var c_m2 = cand.charAt(cand.length-2)
-                // console.log(cand, c_m1, c_m2)
+                console.log(cand, c_m1, c_m2)
                 if (".,:!?".includes(c_m1) && c_m2 == " ") {
                     var new_cand = cand.substring(0, cand.length - 1).trim() + c_m1;
                     $acp_input_box.val(new_cand);
