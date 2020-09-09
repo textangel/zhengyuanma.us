@@ -186,7 +186,7 @@
 
 								<h3>Data Mining Projects</h3>
 								<ul>
-									<li><a href="#imdb">Machine Learning Movie Profit Prediction</a></li>
+									<li><a href="#movie_profit_prediction">Machine Learning Movie Profit Prediction</a></li>
 								</ul>
 								
 								<h3>About this website</h3>	
@@ -341,11 +341,11 @@
 									</form>
 								</span>
 							</article>
-							<!-- Project IMDB -->
-							<article id="imdb">
+							<!-- Project Movie Profit Prediction -->
+							<article id="movie_profit_prediction">
 								<div class="content-desktop"><h2 class="major">Movie Profit Prediction</h2></div>
 								<div class="content-mobile"><h2>Movie Profit Prediction</h2></div>
-								<form action="https://github.com/textangel/IMDB_master" style="text-align:center;">
+								<form action="https://github.com/textangel/MovieProfitPrediction" style="text-align:center;">
 									<ul class="actions" style="display:inline-table;">
 										<li style="display:inline;"><input type="submit" value="Link to Project (Github)" class="primary" /></li>
 									</ul>
@@ -356,14 +356,14 @@
 									<h4 class="major">Feature Generation</h4>
 									I employed various feature generation techniques including:
 									<ul>
-										<li> <a href="https://github.com/textangel/IMDB_master/blob/master/4%20Keyword%20Processing.ipynb">Training word embeddings</a> on keywords extracted from movie overviews.</li>
+										<li> <a href="https://github.com/textangel/MovieProfitPrediction/blob/master/4%20Keyword%20Processing.ipynb">Training word embeddings</a> on keywords extracted from movie overviews.</li>
 										<li> Movie Embeddings using PCA dimensionality reduced TF-IDF compositions of the keyword embeddings.</li>
 										<li> Running PageRank on actor-actor graph to generate actor popularity features.</li>
 
 									</ul>
 
 									<h4 class="major">Modeling Methodology</h4>
-									<div><a href="https://github.com/textangel/IMDB_master/blob/master/5%20Model%20Training.ipynb">I ran the generated features</a> through some sklearn regression pipelines using:</div>
+									<div><a href="https://github.com/textangel/MovieProfitPrediction/blob/master/5%20Model%20Training.ipynb">I ran the generated features</a> through some sklearn regression pipelines using:</div>
 									<ul>
 										<li> SVMRegressor and RandomForestRegressor as base models.</li>
 										<li> LASSO (L1) regularization for automated feature selection.</li>
