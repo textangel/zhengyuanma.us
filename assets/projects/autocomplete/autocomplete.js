@@ -1,12 +1,36 @@
 /*
     File: autocomplete.js
     This file contains the code for the GPT-2 Autocomplete Web App for zhengyuanma.us
+    An autocomplete box is created using the "overlapping boxes trick."
+    An API serving a GPT-2 model is queried on user input and used to fill in the text of the recommendation box.
+    In addition, a box with next word probabilities is displaued to the user.
+
+    [Note]: That the two text boxes overlaps entirely depends on the following code which I placed in the CSS.
+                    .placeholder-container{
+                        display: grid;
+                    }
+                    #project1_box, #project1_box2{
+                        grid-column: 1;
+                        grid-row: 1;
+                        resize: none;
+                    }
+    plus the jquery css code below
+                    $(#project1_box).css({
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        zIndex: 100,
+                        backgroundColor: 'transparent',
+                        borderColor: 'transparent'
+                    });
+    I tried to move the latter css fully into the .css file but it wouldn't work, so keeping it as is.
 
     All globals have prefix `acp_` to avoid clashing with other files.
     Inspiration from: https://www.youtube.com/watch?v=uaa9HVC-tQA
 */
 
-/* 1. Variables and Setup*/
+
+/* 1. Variables Setup, and Helper functions*/
 var $acp_input_box = $('#project1_box'), // The box that the user types into
     $acp_background_box = $('#project1_box2'), // The box that displays the proposed word. It is behind the input box, and a different color, so the user sees them as one box.
     acp_authors_category_list_path = "./assets/projects/autocomplete/authors_category.json",
@@ -16,6 +40,26 @@ var $acp_input_box = $('#project1_box'), // The box that the user types into
     acp_gpt2_author_id_string = "",
     acp_inside_tab_processing = false;
     acp_invisible_char = "\ufeff";
+
+    $('#project1_box').css({
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        zIndex: 100,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent'
+    });
+// Delay (abort) execution of a callback if it was last called more than `ms` miliseconds ago.
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+}
 
 
 /* 2. Updating the GPT2 Author Mode
@@ -139,7 +183,6 @@ function processInputTextGPT2(inputText, acp_gpt2_author_id_string, max_lines_to
 
  /* 3.2 Calling the API
     The GPT2 Model is exposed on our app server at `https://api.zhengyuanma.us/api/gpt2_autocomplete/predict`
-
  */
 function getMatchesAPI(inputText) {
     // Preprocess the text
@@ -276,7 +319,9 @@ function displaySampledMatches (sample_token, topk_matches) {
 
 
 
-  
+/* 5.2 Updating the chart
+    This is very simple, just overwrite `chart.data.datasets[0].data` and `chart.data.labels`.
+ */  
 function updateChart(topKList, chart) {
     chart.data.datasets[0].data = topKList.map((x) => x[1]);
     chart.data.labels= topKList.map((x) => x[0]);
@@ -284,33 +329,10 @@ function updateChart(topKList, chart) {
 }
 
 
-
-// Helper Functions
-function delay(callback, ms) {
-    var timer = 0;
-    return function() {
-      var context = this, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        callback.apply(context, args);
-      }, ms || 0);
-    };
-}
-
-/* Displays*/
-// CSS Styling for the Overlapping Boxes
-$acp_input_box.css({
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    zIndex: 100,
-    backgroundColor: 'transparent',
-    borderColor: 'transparent'
-});
-$acp_background_box.css('color', 'transparent');
-
-
-// Chart display
+/* 5.3 Base code to initialize the chart.
+    This is a chart.js bar chart. 
+    We set up the bar colors, labels, and specify some options.
+*/
 var bgColors = ['rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
