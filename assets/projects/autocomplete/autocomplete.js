@@ -14,7 +14,6 @@ var $acp_input_box = $('#project1_box'), // The box that the user types into
     acp_matches = [],
     acp_all_authors = null, // The list of all possible authors and author categories, to be loaded from file. See  `2. Updating the GPT2 Author Mode`
     acp_gpt2_author_id_string = "",
-    acp_punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
     acp_inside_tab_processing = false;
     acp_invisible_char = "\ufeff";
 
@@ -190,52 +189,73 @@ function getMatchesAPI(inputText) {
 }
 
 /* 4. Autocomplete Text Input
+        Here we add a string of event listeners to our input box, so that the user may interact with it seamlessly.
+        These can be divided into focus/blur, keyup, and keydown events.
+    
+        1. Focus/blur - When the input box is in focus, we want the text of the background box to be displayed, but semi-translucently (We use '#e0e0e0' for this)
+                        When the input box is goes out of focus (blur), we want to hide the background box text. [Note: Testing has confirmed this is not necesary, but we keep it just in case.]
+        2. keyup - if one of [space ! , . : ; ?] is pressed, then the contents of the input box will be processed and sent to the API.
+                    This is done at max once every 200ms, so the server doesn't get clogged up with old requests if the user types too quickly.
+        3. keydown - if a `tab` is pressed, then we perform autocomplete by copying the contents of the background box (recommended next word) to the input box
+                    We also trigger the API to generate the next word, but only if the server has finished processing the last `tab` input. (tracked by a flag `acp_inside_tab_processing`).
+                    [Note: This is done using keydown while the punct are processed using keyup becasue testing has shown this produces a smoother experience.]
  */
 
-// Behavior for focus and blur to achieve the visual effect
+acp_punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
+
+//We set the background box to be semi-transluent
 $acp_input_box.focus(function(){
-    var $input = $(this);
-    var $acp_background_box = $('#project1_box2', $input.parent());
     $acp_background_box.css('color', '#e0e0e0');
  }).blur(function(){
-    var $input = $(this);
-    var $acp_background_box = $('#project1_box2', $input.parent());
-    if ($input.val() == '')
-        $acp_background_box.css('color', 'transparent');
+    $acp_background_box.css('color', 'transparent');
+
+//We trigger the API every time one of [space ! , . : ; ?] is pressed, but at a delay of 200ms if the last request happened too quickly.
  }).keyup(delay(function(event){
     if(acp_punct_delimiter_codes.includes(event.keyCode)){
          if (this.value.length > 0)
              getMatchesAPI(this.value);
      }
+//We autocomplete with the last recommended stentence by copying the contents of the background box to the input box
+// every time `tab` is pressed. We also trigger the API to generate the next word, but only if the server has finished processing the last `tab` input.
+// We keep track of this through a flag `acp_inside_tab_processing`.
  }, 200)).keydown(function(event) { 
     if (event.keyCode == 9) { //tab
+        //Only do anything if server has finished processing last `tab`
         if (!acp_inside_tab_processing){
+            //form the `tab` lock. Note: this lock is released in `getMatchesAPI`
             acp_inside_tab_processing = true;
             $(this).focus();
             event.preventDefault();
+            // Get the text to autofill 
             var cand = $acp_background_box.val()
-            if (cand.length > 0){
-                if (cand.length > 1){
-                    var c_m1 = cand.charAt(cand.length-1)
-                    var c_m2 = cand.charAt(cand.length-2)
-                    // console.log(cand, c_m1, c_m2)
-                    if (".,:!?".includes(c_m1) && c_m2 == " ") {
-                        var new_cand = cand.substring(0, cand.length - 1).trim() + c_m1;
-                        $acp_input_box.val(new_cand);
-                    } else 
-                        $acp_input_box.val(cand);
-                } else
+            if (cand.length > 1){
+                // If the proposed text is a space and then a punctuation, remove the space and update the input box
+                var c_m1 = cand.charAt(cand.length-1)
+                var c_m2 = cand.charAt(cand.length-2)
+                // console.log(cand, c_m1, c_m2)
+                if (".,:!?".includes(c_m1) && c_m2 == " ") {
+                    var new_cand = cand.substring(0, cand.length - 1).trim() + c_m1;
+                    $acp_input_box.val(new_cand);
+                } else 
+                    // Else update the input box  
                     $acp_input_box.val(cand);
-            }
+            } else
+                // If the poposal is empty also update the input box
+                if (cand)
+                    $acp_input_box.val(cand);
+            // Call the API to get the next value
             if (this.value.length > 0)
                 getMatchesAPI(this.value);
         }
     } else {
+        // Clear the background box if any other key is pressed, so the experience is clean.
         $acp_background_box.val('');
     }
  });
 
 
+/* 5. Displaying the matches.
+ */
 
 function displaySampledMatches (sample_token, topk_matches) {
     var last_whitespace = $acp_input_box.val().match(/\s+$/)
