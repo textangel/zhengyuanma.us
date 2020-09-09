@@ -39,7 +39,6 @@ var $acp_input_box = $('#project1_box'), // The box that the user types into
     acp_all_authors = null, // The list of all possible authors and author categories, to be loaded from file. See  `2. Updating the GPT2 Author Mode`
     acp_gpt2_author_id_string = "",
     acp_inside_tab_processing = false;
-    acp_invisible_char = "\ufeff";
 
     $('#project1_box').css({
         position: 'absolute',
@@ -139,16 +138,20 @@ $('#authorLookupForm').submit(function(event){
         2. Append the `acp_gpt2_author_id_string` to the beginning of each line
  */
 function processInputTextGPT2(inputText, acp_gpt2_author_id_string, max_lines_to_keep){
-    const split_text_max_len = 70 //break up lines if longer than 70 characters
+    const split_text_max_len = 72 //break up lines if longer than 70 characters
     if (max_lines_to_keep <= 0) max_lines_to_keep = 10 //we retain the last `max_lines_to_keep` lines of user text
     // First we split along any newlines already present in the text
     split_Text = inputText.split("\n") 
     final_text = []
+    console.log( "final_text_pre: ", split_Text)
     for (ix in split_Text){
         //Then for every line in the split text, if it is longer than `split_text_max_len` we
         //split it by spaces and traverse it, adding words until the resultant line is longer than `split_text_max_len` 
         // Note that whenever we add a new line, we append the `acp_gpt2_author_id_string` to it first.
-        if (split_Text[ix].length <= split_text_max_len)
+        if (split_Text[ix].length == 0){
+            final_text.push(acp_gpt2_author_id_string)
+        }
+        else if (split_Text[ix].length <= split_text_max_len)
             final_text.push(acp_gpt2_author_id_string + " " + split_Text[ix].trim())
         else {
             total_len = 0
@@ -161,24 +164,27 @@ function processInputTextGPT2(inputText, acp_gpt2_author_id_string, max_lines_to
                 } else {
                     // When it is longer than `split_text_max_len`, we break at this point, join the line and add the line to our final list of lines.
                     // Note that whenever we add a new line, we append the `acp_gpt2_author_id_string` to it first.
+                    console.log(cur_split.join(" "),"\n", cur_split.join(" ").trim())
                     final_text.push(acp_gpt2_author_id_string + " " + cur_split.join(" ").trim())
-                    total_len = 0
-                    cur_split = []
+                    total_len = space_split[ix2].length
+                    cur_split = [space_split[ix2]]
                 }
             }
             if (cur_split.length > 0)
+                console.log(cur_split.join(" "), cur_split.join(" ").trim())
                 final_text.push(acp_gpt2_author_id_string + " " + cur_split.join(" ").trim()) //Add back the leftover line in last iteration
         }
     }
     //We only keep the last `max_lines_to_keep` lines
     final_text = final_text.slice(Math.max(final_text.length-max_lines_to_keep, 0))
-    // We add 10 copies of the empty line (rather, the line with only `acp_gpt2_author_id_string`)
-    // This is a hack to make GPT-2 think it's at the beginning of a section, so will write fluently without interruptions.
-    for (var i=0; i<10; i++) {
-        final_text.unshift(acp_gpt2_author_id_string);        
-    }
+    console.log( "final_text_post: ", final_text)
+    
     // We join the list of lines back by "\n" to send to the server.
     return final_text.join("\n")
+
+    //We tried this for a bit, that is, changing line_breaks into an invisible character (set `acp_invisible_char = "\ufeff";` above)
+    // but it didn't work out so well and I think the mechanical nature of actual linebreaks is what gives GPT2 its charm.
+    // return final_text.join("\n").replace(acp_invisible_char, "\n"+acp_gpt2_author_id_string+" ") 
 }
 
  /* 3.2 Calling the API
@@ -215,7 +221,7 @@ function getMatchesAPI(inputText) {
             acp_sample_token = api_response["sample_token"];
             if (acp_matches.length > 0) {
                 // We write the recommended token out to the text field.
-                displaySampledMatches (acp_sample_token, acp_matches_top_k);
+                displaySampledMatches (acp_sample_token);
                 // We graph the top 20 responses
                 updateChart(acp_matches_top_k, myChart);
             }
@@ -297,26 +303,25 @@ $acp_input_box.focus(function(){
  });
 
 
-/* 5. Displaying the matches.
+ /* 5. Displaying and Plotting the matches.
  */
 
-function displaySampledMatches (sample_token, topk_matches) {
+ /* 5.1 Displaying the Matches
+ The meat of this function is `$acp_background_box.val($acp_input_box.val().trim() + sample_token);`
+ The casing is to handle the case if if we have a line break at the end of the input text, the trim()
+ occurs we add the line break so essentially our text remains the same. In the below version, we only trim if 
+ the end of the input does not have a "\n"
+
+ Note: I wrote some special forms of `displaySampledMatches` to handle some edge cases but it doesn't seem they're necessary
+ at the moment. I moved them to Appendix 1.
+  */
+ function displaySampledMatches (sample_token) {
     var last_whitespace = $acp_input_box.val().match(/\s+$/)
     if (last_whitespace && last_whitespace[0].includes("\n")){
-        if (sample_token.match(/\s+/)){
-            for (var i = topk_matches.length-1; i >= 0; i--){
-                if (/^[a-zA-Z]+$/.test(topk_matches[i][0].trim())){ //only contains alpha, and at least one alpha char
-                    sample_token = topk_matches[i][0]
-                    $acp_background_box.val($acp_input_box.val() + sample_token);
-                    break;
-                }
-            }
-        } else 
-            $acp_background_box.val($acp_input_box.val() + sample_token);
+        $acp_background_box.val($acp_input_box.val() + sample_token);
     } else
         $acp_background_box.val($acp_input_box.val().trim() + sample_token);
 }
-
 
 
 /* 5.2 Updating the chart
@@ -369,3 +374,75 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+
+/* APPENDIX */
+/*A.1 Old functions that may still be useful */
+
+/*  _displaySampledMatches version 2
+    This corresponds to 5.1 (`displaySampledMatches`)
+    The difference is that if a new_line is proposed, we don't let it through, but we either handle it by 
+    choosing the top element of `topk_matches` or randomly sampling from `topk_matches` to be the next text.
+    (See Variant 1 and Variant 2 below).
+    This was in response to a bug where we saw many newlines one after another.
+    Thankfully, it seems that this bug has gone away.
+*/
+function _displaySampledMatches (sample_token, topk_matches) {
+    //`topk_matches` is a size-20 array of array with the inner array being a pair [word, prob]
+    
+    // We had an alternate version where we ignored line breaks and sampled from the rest of the distribution if
+    // We get two line breaks in a row. Thankfully, this actually rarely happens. 
+    // The rest of the function is not so important either, as the situation it tries to catch and recover from rarely happens.
+    // We leave it here jsut for safety's sake
+    
+    // Variant 1: Ignore line breaks, sample from remaining words on line break using randomSampleFromWeightedArray
+    // if (sample_token.includes("\n")){
+    //     var candidate_matches = topk_matches.map(a => [a[0],parseFloat(a[1])]) // Necessary preprocessing
+    //     var candidate_matches = candidate_matches.filter(a => !a[0].includes("\n")) // Disallow matches with newlines
+    //     var sample_token = _randomSampleFromWeightedArray(candidate_matches)
+    //     $acp_background_box.val($acp_input_box.val() + sample_token);
+    
+    // Variant 2: Allow line breaks, but if two line breaks occur in a row, then we use topk_matches[i][0] to update.
+    var last_whitespace = $acp_input_box.val().match(/\s+$/)
+    if (last_whitespace && last_whitespace[0].includes("\n")){
+        if (sample_token.match(/\s+/)){
+            for (var i = topk_matches.length-1; i >= 0; i--){
+                if (/^[a-zA-Z]+$/.test(topk_matches[i][0].trim())){ //only contains alpha, and at least one alpha char
+                    sample_token = topk_matches[i][0]
+                    $acp_background_box.val($acp_input_box.val() + sample_token);
+                    break;
+                }
+            }
+    
+        } else 
+            $acp_background_box.val($acp_input_box.val() + sample_token);
+    } else
+        $acp_background_box.val($acp_input_box.val().trim() + sample_token);
+}
+
+// Random sample from weighted array of array length 2, where each inner array is [object, weight].
+// Weight must be a float
+// Currently unused as we are using a different scheme - we simply let line breaks through.
+// Used in Variant 1 Above
+function _randomSampleFromWeightedArray(weightedArray){
+    var candidate_matches = weightedArray
+    var cum_candidates = []
+    var cum_probs = 0.0
+    for (ix in candidate_matches){
+        cum_probs += candidate_matches[ix][1]
+        cum_candidates.push([candidate_matches[ix][0], cum_probs])
+    }
+    // cum_probs now has the sum of probabilities
+    var random_select_t = Math.random() * cum_probs
+    
+    new_cand = null
+    for (ix in cum_candidates){
+        if (cum_candidates[ix][1] >= random_select_t){
+            new_cand = cum_candidates[ix]
+            break
+        }
+    }
+    if (new_cand == null)
+        new_cand = cum_candidates[cum_candidates.length - 1]
+    return new_cand[0]
+}
