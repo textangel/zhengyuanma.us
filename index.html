@@ -181,7 +181,7 @@
 								</ul>
 								<h3>Computer Vision Projects</h3>
 								<ul>
-									<li><a href="#style_transfer">Image Style Transfer</a></li>
+									<li><a href="#style_transfer">Neural Image Style Transfer</a></li>
 								</ul>
 
 								<h3>Data Mining Projects</h3>
@@ -253,33 +253,39 @@
 							</article>
 
 							<article id="autocomplete">
-								<div class="content-desktop"><h2 class="major">Autocomplete</h2></div>
-								<div class="content-mobile"><h2>Autocomplete</h2></div>
-								<!-- <a href="#autocomplete_intro"><input type="submit" value="view intro" class="primary" /></a>
-
-								<p> -->
-								<!-- In 2019, Open-AI's <a href="https://openai.com/blog/better-language-models/">GPT-2</a> language model shook the internet.
-								GPT-2 is able to generalize the style of any writer, writing lucid, stylistic, and often coherent prose. 
-								I wanted to use GPT-2 to augment my own creative potential.
-								To that end, I fine-tuned GPT-2 on a dataset consisting of writings from various authors. 
-								I built the below app, which allows one to write collaboratively with GPT-2.
-								<p></p> -->
-
+								<div class="content-desktop"><h2 class="major">Authoring with GPT-2</h2></div>
+								<div class="content-mobile"><h2>Authoring with GPT-2</h2></div>
+								<p id="autocomplete_show_instructions_btn" style="display:none;">
+									<a onclick="this.parentNode.style.display = 'none'; $('#autocomplete_instructions').get()[0].style.display = 'block'">(Show Instructions)</a> 
+								</p>
+								<div id="autocomplete_instructions">
+									<p>Makes use of the full power of the GPT-2 neural language model in multiple modalities - here mimicking the style of over 50 well-known authors.
+										Type into the box and the author will recommend the next word in his or her voice. Press <code>tab</code> to have the author write for you. Change authors anytime.
+									</p>
+									<b>Instructions: </b> <a onclick="this.parentNode.style.display = 'none'; $('#autocomplete_show_instructions_btn').get()[0].style.display = 'block'">(hide)</a> 
+									You can write in the box, and the author will give your tips on what to write next.
+									<ul>
+									<li>Text is generated whenever you type a <code>space</code> or <code>punctuation</code>.</li>
+									<li><code>Tab</code> will automatically accept the proposed word.</li>
+									</ul>
+									<p>(Note: You can continually press tabs to generate text in an author's style, but there is a limit in how fast <code>tab</code>s will be accepted to avoid spamming the model. The author always writes at the end of the box.)</p>
+									<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
+								</div>
+								
+								<script>$("#autocomplete_hide_instructions_btn").click(function(e){};) </script>
 								<form id="authorLookupForm" action="#">
 									<div class="fields">
 										<div class="field half">
-											Input an author's style to mimic:
+											What author will be my muse today? <br> (Change authors)
 										</div>
 										<div class="field half">
-										<input id="authorLookup" type="text" />
+										<input id="authorLookup" type="text" placeholder="Enter Author Name" />
 										</div>
 									</div>
 									<div id="authorDisplay">
 										<p>The current author is <b>   </b>.</p>
 									</div>
 								</form>
-								<p><b>Instructions:</b> Text is generated whenever you type a space or punctuation. Tabs will automatically accept the proposed word.</p>
-								<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
 								<form action="#">
 									<div class="fields">
 										<div class="field">
@@ -299,12 +305,17 @@
 							<article id="nmt">
 								<div class="content-desktop"><h2 class="major">Neural Machine Translation</h2></div>
 								<div class="content-mobile"><h2>Neural Machine Translation</h2></div>
+								<p id="nmt_show_instructions_btn" style="display:none;">
+									<a onclick="this.parentNode.style.display = 'none'; $('#nmt_instructions').get()[0].style.display = 'block'">(Show Instructions)</a> 
+								</p>
+								<div id="nmt_instructions">
+									<p>Neural Networks help you translate from English to Spanish or vice-versa. </p>
+									<p><b>Instructions: </b> <a onclick="$('#nmt_instructions').get()[0].style.display = 'none'; $('#nmt_show_instructions_btn').get()[0].style.display = 'block'">(hide)</a> 
+										 Pick a model and a translation direction and type into the left box. The translation will appear in the right box. The text updates when you type 'space' or a punctuation. The LSTM-Char model is recommended as it is more fluent and doesn't suffer from unknown words.</p>
+								   <p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
+								</div>
 								<span class="placeholder-container" style="position: relative;">
-									<p>
-									   Currently, models are trained for Spanish to English or English to Spanish translation. 
-									</p> 
 									
-									<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
 									<form action="#">
 										<div class="fields">
 										<div class="field half">
@@ -324,10 +335,7 @@
 										</ul>
 										</div>
 									</div>
-									<p>
-										Note: The text updates when you type 'space' or a punctuation. The LSTM-Char model is more fluent and doesn't suffer from unknown words.
-										  
-									   </p>
+								
 										<div class="fields">
 											<div class="field half">
 												<label id="nmt_src_sent_label" for="project_nmt_box">Source Language: Spanish</label>
@@ -378,9 +386,10 @@
 							<!-- Project Style Transfer -->
 							<article id="style_transfer">
 							
-								<div class="content-desktop"><h2 class="major">Image Style Transfer</h2></div>
-								<div class="content-mobile"><h2>Image Style Transfer</h2></div>
-							
+								<div class="content-desktop"><h2 class="major">Neural Image Style Transfer</h2></div>
+								<div class="content-mobile"><h2>Neural Image Style Transfer</h2></div>
+								
+								<p>A Neural Network and Tensorflow are use to generate from scratch a new image with the same content as a user-provided base image and in the same style of a user-provided style image.  &nbsp;&nbsp;&nbsp;&nbsp; <a href="#style_transfer_example"> <b>Can I see an example?</b></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="#style_transfer_explanation"> <b>How does this work?</b> </a></p>
 								<form id="style_transfer_img_submit" action="#">
 								<div class="fields", style="text-align: center;">
 									<div class="field half">
@@ -414,15 +423,13 @@
 						
 							<div id="style_transfer_resource_warning" style="display:block;">
 								<p>
-									<a href="#style_transfer_explanation"><b>How does this work?</b></a>
-								</p>
-								<p>
 									<b>Instructions:</b> Upload a Base Image and a Style Image and generate a stylized image <a href="#style_transfer_example">like this</a>!
 									Images must .jpg or  .png with correct file extensions, and the total size of both images should be less than 15MB.
 								</p>
 								<p>
 									<b>Notes on usage:</b> Servers are expensive! To limit resource usage the app is limited to a few concurrent requests and memory limitations. If you hit those limitations you may get a message asking you to try again later; Don't worry, the app will be available again in not too long! 
 								</p>
+								<p><b>Uses: Flask (API serving), Python, Tensorflow</b></p>
 							</div>	
 							</article>
 
@@ -431,25 +438,18 @@
 								<a href="#style_transfer">
 									<div class="content-desktop"><h2 class="major">Image Style Transfer Example</h2></div>
 									<div class="content-mobile"><h2>Image Style Transfer Example</h2></div>
-									<img src="images/style_pem.png" style="max-width: 500px; max-height: 700px; display: block; border: none; margin-left: auto; margin-right: auto; width: 50%;"/>
+									<img src="images/style_pem.png" style="max-width: 900px; max-height: 1200px; display: block; border: none; margin-left: auto; margin-right: auto; width: 80%;"/>
 								<div style="text-align: center;">
 									<input type="button" class="primary" value="Back" style="display:inline; text-align:center" />
 								</div>
 								</a>
 							</article>
 
-							<article id="style_transfer_explanation">
-								<a href="#style_transfer">
-									
-									
-									<div class="content-desktop"><h2 class="major">Image Style Transfer</h2></div>
-									<div class="content-mobile"><h2>Image Style Transfer</h2></div>
-									<img src="images/style_pem.png" style="max-width: 500px; max-height: 700px; display: block; border: none; margin-left: auto; margin-right: auto; width: 50%;"/>
-								<div style="text-align: center;">
-									<input type="button" class="primary" value="Back" style="display:inline; text-align:center" />
-								</div>
-								</a>
-							</article>
+							<article id="style_transfer_explanation" onclick="location.href='#style_transfer'"></article>
+							<script>
+								// $("#style_transfer_explanation").click(window.location.href = '#style_transfer')
+								$("#style_transfer_explanation").load("./assets/projects/image_style_transfer/style_transfer_explanation.html");
+							</script>
 					</div>
 
 				<!-- Footer -->
