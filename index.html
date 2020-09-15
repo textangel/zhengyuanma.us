@@ -324,20 +324,35 @@
 										<div class="fields">
 										<div class="field half">
 										<label>Model</label>
-										<ul id="nmt_model_select" class="actions", style="text-align: center;">
-											<li><input type="submit" value="LSTM" class="primary"/></li>
-											<li><input type="submit" value="Char LSTM" class="active" /></li>
-											<!-- <li><input type="submit" value="Transformer" class="primary" /></li> -->
-											<!-- <li><input type="submit" value="Transformer" class="primary" /></li> -->
-										</ul>
+										<div id="nmt_model_select" style="margin: auto;">
+											<div style="text-align: center; margin: auto;">
+												<input type="submit" value="Transformer" class="primary" />
+											</div>
+											<br>
+											<ul class="actions", style="text-align: center; margin: auto;">
+												<li><input type="submit" value="LSTM" class="primary"/></li>
+												<li><input type="submit" value="Char LSTM" class="active" /></li>
+											</ul>
+											
+										</div>
 										</div>
 										<div class="field half">
 											<label>Langauge</label>
-										<ul id="nmt_lang_select" class="actions", style="text-align: center;">
-											<li><input type="submit" value="ENG - SPA" class="primary"/></li>
-											<li><input type="submit" value="SPA - ENG" class="active" /></li>
+										<!-- <ul id="nmt_lang_select" class="actions", style="text-align: center;"> -->
+										<div id="nmt_lang_select" class="actions", style="text-align: center;">
+											<div style="text-align: center; margin: auto;">
+												<input type="submit" value="SPA - ENG" class="active" />
+											</div>
+											<br>
+											<div style="text-align: center; margin: auto;">
+												<input type="submit" value="ENG - SPA" class="primary"/>
+											</div>
+
+											<!-- <li><input type="submit" value="ENG - SPA" class="primary"/></li> -->
+											<!-- <li><input type="submit" value="SPA - ENG" class="active" /></li> -->
 											<!-- <li><input type="submit" value="Transformer" class="primary" /></li> -->
-										</ul>
+										<!-- </ul> -->
+										</div>
 										</div>
 									</div>
 								

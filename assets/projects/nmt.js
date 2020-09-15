@@ -1,7 +1,7 @@
 var $nmt_input_box = $('#project_nmt_box'),
     $nmt_output_box = $('#project_nmt_box2'),
-    $nmt_model_select_boxes = $('#nmt #nmt_model_select li input'),
-    $nmt_lang_select_boxes = $('#nmt #nmt_lang_select li input'),
+    $nmt_model_select_boxes = $('#nmt #nmt_model_select input'),
+    $nmt_lang_select_boxes = $('#nmt #nmt_lang_select input'),
     banned_words = ["Disponible inconsciente.", "It is independent."]
 var punct_delimiter_codes = [32, 16, 188, 190, 186, 191] //space ! , . : ; ?
 var nmt_api_model = 'lstm_char';
@@ -19,8 +19,12 @@ $nmt_model_select_boxes.on('click', event => {
             nmt_api_model = 'lstm_char';
             if ($nmt_input_box.val().length > 0)
                 getTranslationAPI($nmt_input_box.value);
+        } else if (event.target.value == "Transformer"){
+            nmt_api_model = 'transformer';
+            if ($nmt_input_box.val().length > 0)
+                getTranslationAPI($nmt_input_box.value);
         }
-        $active_box = $('#nmt #nmt_model_select li .active')[0];
+        $active_box = $('#nmt #nmt_model_select .active')[0];
         $active_box.className = "primary";
         event.target.className = "active";
     }
@@ -42,7 +46,7 @@ $nmt_lang_select_boxes.on('click', event => {
             if ($nmt_input_box.val().length > 0)
                 getTranslationAPI($nmt_input_box.value);
         }
-        $active_box = $('#nmt #nmt_lang_select li .active')[0];
+        $active_box = $('#nmt #nmt_lang_select .active')[0];
         $active_box.className = "primary";
         event.target.className = "active";
     }
