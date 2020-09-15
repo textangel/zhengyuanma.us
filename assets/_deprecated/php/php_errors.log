@@ -1,8 +1,0 @@
-[30-Aug-2020 04:11:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function curl_init() in /var/www/zhengyuanma.us/assets/php/mail.php:52
-Stack trace:
-#0 {main}
-  thrown in /var/www/zhengyuanma.us/assets/php/mail.php on line 52
-[30-Aug-2020 04:14:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function curl_init() in /var/www/zhengyuanma.us/assets/php/mail.php:52
-Stack trace:
-#0 {main}
-  thrown in /var/www/zhengyuanma.us/assets/php/mail.php on line 52
