@@ -28,12 +28,12 @@ To generate the image, Gatys et al. used a large pre-trained 19-layer VGG neural
 <h2>Appendices</h2>
 <h3>Appendix 1</h3>
 </div><div class="cell markdown-cell"><p><strong>Texture Synthesis Using Image Quilts</strong><br>
-<img src="./assets/projects/image_style_transfer/resources/341CB3E9436068CA2E3EEEEF06D03839.png" alt="Screen Shot 2020-09-09 at 2.56.52 PM.png" width="300"> <img src="./assets/projects/image_style_transfer/resources/E83FD9FE340CAE9303A5C4C809EF20B7.png" alt="Screen Shot 2020-09-09 at 2.56.41 PM.png" width="300"></p>
+<img src="./assets/projects/image_style_transfer/resources/341CB3E9436068CA2E3EEEEF06D03839.png"  width="300"> <img src="./assets/projects/image_style_transfer/resources/E83FD9FE340CAE9303A5C4C809EF20B7.png"  width="300"></p>
 <p>Both images are from the original quilting paper. [1] Some other examples where one can see quilt-based texture transfer are <a href="http://cs.brown.edu/courses/cs129/results/proj4/chaoqian/">here</a> and <a href="https://sandipanweb.wordpress.com/2017/10/24/some-computational-photography-image-quilting-texture-synthesis-with-dynamic-programming-and-texture-transfer-in-python/">here</a> (external).</p>
 <h3>Appendix 2</h3>
 <p>A Convolutional Neural Network [4] comprises of multiple layers, which may be thought of as "filters". The lower level layers match lower level features such as edges, the higher level layers match high level features such as entire faces or parts of objects. The "matching" of an image at all these different layers is what gives Convolutional Neural Networks so much power in all forms of image processing.</p>
-</div><div class="cell markdown-cell"><p><img src="./assets/projects/image_style_transfer/resources/10CBA1FABB8C6C1B39D87FA96FE862D9.png" alt="main-qimg-10cba1fabb8c6c1b39d87fa96fe862d9.png" width="300"></p>
+</div><div class="cell markdown-cell"><p><img src="./assets/projects/image_style_transfer/resources/10CBA1FABB8C6C1B39D87FA96FE862D9.png"  width="300"></p>
 <h3>Appendix 3</h3>
 <p>Below, you can think of <code>conv1_1</code> as corresponding to using the correlations of the "low-level features" above, <code>pool1</code>-<code>pool3</code> are corresponding to using the correlations of the "mid-level features" above, and <code>pool4</code> as using the high-level features above. A style image is generated when the feature correlations match the feature correlations of the original image, that is, when the features which tend to appear together in the original image also tend to appear together in the generated image, without regard for where in the generated image this occurs.</p>
-</div><div class="cell markdown-cell"><p><img src="./assets/projects/image_style_transfer/resources/B0AF4498E58D5D032D6BA96216C4467F.png" alt="Screen Shot 2020-09-09 at 3.52.13 PM.png" width="300"></p>
+</div><div class="cell markdown-cell"><p><img src="./assets/projects/image_style_transfer/resources/B0AF4498E58D5D032D6BA96216C4467F.png"  width="300"></p>
 </div></div>

@@ -243,19 +243,26 @@
 
 						<!-- Projects -->
 							<!-- Project Autocomplete -->
-							<article id="autocomplete_intro">
+							<!-- <article id="autocomplete_explanation">
 								<p>
 									In 2019, Open-AI's <a href="https://openai.com/blog/better-language-models/">GPT-2</a> language model shook the internet.
 									GPT-2 is able to generalize the style of any writer, writing lucid, stylistic, and often coherent prose. It does this by generalizing on 
-										
+									
+									How does GPT-2 work? 
+
+									<GPT-2 is essentially a tr
+									
+									To make this model, I fine-tuned a 117MB GPT-2 model on a selection of text from <a href="https://github.com/aparrish/gutenberg-dammit">Project Gutenburg</a>. 
+									I pre
 									What if you could write collaboratively with GPT-2, letting the machine augment your own creative potential?</p>
 									I fine-tuned GPT-2 on a dataset consisting of writings from various authors. Using this, I built an autocomplete app.<p></p>
-							</article>
+							</article> -->
 
 							<article id="coauthoring_gpt2">
 								<div class="content-desktop"><h2 class="major">Co-authoring with GPT-2</h2></div>
 								<div class="content-mobile"><h2>Co-authoring with GPT-2</h2></div>
 								<p id="autocomplete_show_instructions_btn" style="display:none;">
+									Type some text, and press <code>tab</code> to have the author write for you.<br>
 									<a onclick="this.parentNode.style.display = 'none'; $('#autocomplete_instructions').get()[0].style.display = 'block'">(Show Instructions)</a> 
 								</p>
 								<div id="autocomplete_instructions">
@@ -313,7 +320,7 @@
 									<a onclick="this.parentNode.style.display = 'none'; $('#nmt_instructions').get()[0].style.display = 'block'">(Show Instructions)</a> 
 								</p>
 								<div id="nmt_instructions">
-									<p>Neural Networks help you translate from English to Spanish or vice-versa. </p>
+									<p>Neural Networks help you translate from English to Spanish or vice-versa. All models are implemented and trained from scratch. &nbsp;&nbsp;&nbsp;&nbsp; <a href="#nmt_explanation"> <b>What's the background of this?</b> </a></p>
 									<p><b>Instructions: </b> <a onclick="$('#nmt_instructions').get()[0].style.display = 'none'; $('#nmt_show_instructions_btn').get()[0].style.display = 'block'">(hide)</a> 
 										 Pick a model and a translation direction and type into the left box. The translation will appear in the right box. The text updates when you type 'space' or a punctuation. The LSTM-Char model is recommended as it is more fluent and doesn't suffer from unknown words.</p>
 								   <p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
@@ -329,16 +336,18 @@
 												<input type="submit" value="Transformer" class="primary" />
 											</div>
 											<br>
-											<ul class="actions", style="text-align: center; margin: auto;">
+											<div style="text-align: center; margin: auto;">
+												<input type="submit" value="Char LSTM" class="active" />
+											</div>
+											<!-- <ul class="actions", style="text-align: center; margin: auto;">
 												<li><input type="submit" value="LSTM" class="primary"/></li>
 												<li><input type="submit" value="Char LSTM" class="active" /></li>
-											</ul>
+											</ul> -->
 											
 										</div>
 										</div>
 										<div class="field half">
 											<label>Langauge</label>
-										<!-- <ul id="nmt_lang_select" class="actions", style="text-align: center;"> -->
 										<div id="nmt_lang_select" class="actions", style="text-align: center;">
 											<div style="text-align: center; margin: auto;">
 												<input type="submit" value="SPA - ENG" class="active" />
@@ -348,10 +357,7 @@
 												<input type="submit" value="ENG - SPA" class="primary"/>
 											</div>
 
-											<!-- <li><input type="submit" value="ENG - SPA" class="primary"/></li> -->
-											<!-- <li><input type="submit" value="SPA - ENG" class="active" /></li> -->
-											<!-- <li><input type="submit" value="Transformer" class="primary" /></li> -->
-										<!-- </ul> -->
+										
 										</div>
 										</div>
 									</div>
@@ -369,6 +375,11 @@
 									</form>
 								</span>
 							</article>
+
+							<article id="nmt_explanation" onclick="location.href='#nmt'"></article>
+							<script>
+								$("#nmt_explanation").load("./assets/projects/nmt/nmt_history.html");
+							</script>
 
 
 							<!-- Project Movie Profit Prediction -->
@@ -490,7 +501,7 @@
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/course_notes.js"></script>
 			<script src="assets/projects/autocomplete/autocomplete.js"></script>
-			<script src="assets/projects/nmt.js"></script>
+			<script src="assets/projects/nmt/nmt.js"></script>
 			<script src="assets/projects/image_style_transfer/image_style_transfer.js"></script>
 			<!-- <script src="https://www.google.com/recaptcha/api.js?render=6LcEH8UZAAAAAF3j_tEIbO3_bJbFeLSs7lLv3XY2"></script> -->
 	</body>

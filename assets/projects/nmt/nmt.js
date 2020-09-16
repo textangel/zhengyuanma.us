@@ -13,16 +13,13 @@ $nmt_model_select_boxes.on('click', event => {
     if (event.target.className == "primary"){
         if (event.target.value == "LSTM"){
             nmt_api_model = 'lstm';
-            if ($nmt_input_box.val().length > 0)
-                getTranslationAPI($nmt_input_box.value);
+            safeGetTranslationAPI()
         } else if (event.target.value == "Char LSTM"){
             nmt_api_model = 'lstm_char';
-            if ($nmt_input_box.val().length > 0)
-                getTranslationAPI($nmt_input_box.value);
+            safeGetTranslationAPI()
         } else if (event.target.value == "Transformer"){
             nmt_api_model = 'transformer';
-            if ($nmt_input_box.val().length > 0)
-                getTranslationAPI($nmt_input_box.value);
+            safeGetTranslationAPI()
         }
         $active_box = $('#nmt #nmt_model_select .active')[0];
         $active_box.className = "primary";
@@ -37,20 +34,26 @@ $nmt_lang_select_boxes.on('click', event => {
             $('#nmt_src_sent_label').text("Source Language: Spanish")
             $('#nmt_tgt_sent_label').text("Target Language: English")
             nmt_api_lang = 'es_en';
-            if ($nmt_input_box.val().length > 0)
-                getTranslationAPI($nmt_input_box.value);
+            safeGetTranslationAPI()
         } else if (event.target.value == "ENG - SPA"){
             $('#nmt_src_sent_label').text("Source Language: English")
             $('#nmt_tgt_sent_label').text("Target Language: Spanish")
             nmt_api_lang = 'en_es';
-            if ($nmt_input_box.val().length > 0)
-                getTranslationAPI($nmt_input_box.value);
+            safeGetTranslationAPI()
         }
         $active_box = $('#nmt #nmt_lang_select .active')[0];
         $active_box.className = "primary";
         event.target.className = "active";
     }
 });
+
+function safeGetTranslationAPI(){
+    console.log($nmt_input_box.val())
+    if ($nmt_input_box.val().length > 0){
+        console.log($nmt_input_box.value)
+        getTranslationAPI($nmt_input_box.val());
+    }
+}
 
 $nmt_input_box.keyup(delay(function(event){
     if(punct_delimiter_codes.includes(event.keyCode)){
@@ -63,7 +66,7 @@ function getTranslationAPI(inputText) {
     var matchList = [];
     var request = new XMLHttpRequest();
     var url = 'https://api.zhengyuanma.us/api/nmt/' + nmt_api_model + "/" + nmt_api_lang;
-    var params = "src_sent="+ inputText;
+    var params = "src_sent="+ encodeURI(inputText);
     request.open('GET', url + "?" + params, true);
     //Send the proper header information along with the request
     request.setRequestHeader('Content-type', 'application/json');
