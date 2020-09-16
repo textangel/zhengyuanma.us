@@ -261,11 +261,13 @@
 							<article id="coauthoring_gpt2">
 								<div class="content-desktop"><h2 class="major">Co-authoring with GPT-2</h2></div>
 								<div class="content-mobile"><h2>Co-authoring with GPT-2</h2></div>
+
 								<p id="autocomplete_show_instructions_btn" style="display:none;">
 									Type some text, and press <code>tab</code> to have the author write for you.<br>
 									<a onclick="this.parentNode.style.display = 'none'; $('#autocomplete_instructions').get()[0].style.display = 'block'">(Show Instructions)</a> 
 								</p>
 								<div id="autocomplete_instructions">
+									<a onclick="$('#autocomplete_instructions').get()[0].style.display = 'none'; $('#autocomplete_show_instructions_btn').get()[0].style.display = 'block'">(Hide Instructions)</a> <br>
 									<p>Makes use of the full power of the GPT-2 neural language model in multiple modalities - here mimicking the style of over 50 well-known authors.
 										Type into the box and the author will recommend the next word in his or her voice. Press <code>tab</code> to have the author write for you. Change authors anytime.
 									</p>
@@ -279,8 +281,8 @@
 									<p>(Note: 
 										 You can continually press tabs to generate text in an author's style, but there is a limit in how fast <code>tab</code>s will be accepted to avoid spamming the model. The author always writes at the end of the box and may not always suggest the maximum probaility word since it is <em>sampling</em> from all possible next words. Feel free to mix multiple authors in a single composition!) 
 									</p>
-									<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b>
-									<br> <a onclick="$('#autocomplete_instructions').get()[0].style.display = 'none'; $('#autocomplete_show_instructions_btn').get()[0].style.display = 'block'">(Hide Instructions)</a> </p>
+									<p>Tools used: <b>Flask (API Serving), Python, PyTorch</b> </p>
+									
 									
 								</div>
 								

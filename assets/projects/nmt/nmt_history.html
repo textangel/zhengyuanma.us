@@ -1,6 +1,9 @@
       <div id="titlearea">
         <h2>A History of Neural Machine Translation</h2>
       </div>
+      <form action="#nmt">
+        <input type="submit" value="Back" style="display:inline; text-align:center" />
+      </form>
       <div id="contentarea"><div class="cell markdown-cell"><p>Neural Machine Translation (NLP) is one of the most paradigmatic applications of neural networks to Natural Language Processing (NLP). The history of the field has been dominated by statistical approaches and the LSTM recurrent neural network, but currently is dominated primiarily by the Transformer architecture.</p>
 <h3>The Foundations of Neural Nachine Translation</h3>
 <p>Neural networks have been worked on since the early 1960s. [1] In much early work it was hypothesized that a single neural network layer repeatedly applied to different input at different "time-steps", the <strong>recurrent neural network</strong>, would be useful in predicting sequential data. Ronald Williams and David Zipster produced the canonical learning algorithm for the RNN, <strong>backpropagation through time</strong>, in 1992. [2] RNNs trained using back-propagation-through-time had a critical liability: to train them required pushing back the dependency on the current input many time-steps, but after many time-steps the gradient tends to shrink rapidly to zero. For this reason, RNNs cannot learn long-term dependencies. In 1997, Hochreiter and Schmidhuber proposed <strong>Long Short Term Memory (LSTM)</strong> networks, a variant of the RNN with input, output, and forget gates which controlled the gradient flow and greatly increased the sequence dependency length that can be learned. [3] For this reason, LSTMs were the dominant paradigm in Natural Langauge Processing until 2018.</p>
