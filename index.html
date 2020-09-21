@@ -322,10 +322,16 @@
 									<a onclick="this.parentNode.style.display = 'none'; $('#nmt_instructions').get()[0].style.display = 'block'">(Show Instructions)</a> 
 								</p>
 								<div id="nmt_instructions">
-									<p>Neural Networks help you translate from English to Spanish or vice-versa. All models are implemented and trained from scratch. &nbsp;&nbsp;&nbsp;&nbsp; <a href="#nmt_explanation"> <b>What's the background of this?</b> </a></p>
-									<p><b>Instructions: </b> <a onclick="$('#nmt_instructions').get()[0].style.display = 'none'; $('#nmt_show_instructions_btn').get()[0].style.display = 'block'">(hide)</a> 
-										 Pick a model and a translation direction and type into the left box. The translation will appear in the right box. The text updates when you type 'space' or a punctuation. The LSTM-Char model is recommended as it is more fluent and doesn't suffer from unknown words.</p>
-								   <p>Tools used: <b>Flask (API Serving), Python, PyTorch</b></p>
+									<p>Neural Networks help you translate from English to Spanish or vice-versa. Models were trained on 2008-2016 TED Talks using PyTorch on Google Colab. <br>
+										<a href="#nmt_training_explanation"> <b>Tell Me Mode About The Models</b> </a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="#nmt_explanation"> <b>What's the background of this?</b> </a></p>
+									<p><b>Instructions: </b> 
+										 Pick a model and a translation direction and type into the left box. The translation will appear in the right box. The text updates when you type 'space' or a punctuation.
+										The Transformer or Char-LSTM models tend to produce the best translations.
+										 </p>
+								   <p>Tools used: <b>Flask (API Serving), Python, PyTorch</b><br>
+									<a onclick="$('#nmt_instructions').get()[0].style.display = 'none'; $('#nmt_show_instructions_btn').get()[0].style.display = 'block'">(Hide Instructions)</a> 
+								</p>
+								   
 								</div>
 								<span class="placeholder-container" style="position: relative;">
 									
@@ -335,15 +341,12 @@
 										<label>Model</label>
 										<div id="nmt_model_select" style="margin: auto;">
 											<div style="text-align: center; margin: auto;">
-												<input type="submit" value="Transformer" class="primary" />
+												<input type="submit" value="Transformer" class="active" />
 											</div>
 											<br>
-											<!-- <div style="text-align: center; margin: auto;">
-												<input type="submit" value="Char LSTM" class="active" />
-											</div> -->
 											<ul class="actions", style="text-align: center; margin: auto;">
 												<li><input type="submit" value="LSTM" class="primary"/></li>
-												<li><input type="submit" value="Char LSTM" class="active" /></li>
+												<li><input type="submit" value="Char LSTM" class="primary" /></li>
 											</ul>
 											
 										</div>
@@ -381,6 +384,11 @@
 							<article id="nmt_explanation" onclick="location.href='#nmt'"></article>
 							<script>
 								$("#nmt_explanation").load("./assets/projects/nmt/nmt_history.html");
+							</script>
+
+							<article id="nmt_training_explanation" onclick="location.href='#nmt'"></article>
+							<script>
+								$("#nmt_training_explanation").load("./assets/projects/nmt/training_NMT_models.html");
 							</script>
 
 
