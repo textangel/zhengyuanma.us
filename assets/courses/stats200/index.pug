@@ -1,0 +1,10 @@
+-var files=JSON.parse(files)
+-var base_path=base_path
+
+h2 STAT200 - Stats Inference
+p Listed below are my course notes for my Statistical Inference class.
+div#contentarea
+    ul
+        each file in files
+            li
+                a(href=base_path + file+ ".html")= file

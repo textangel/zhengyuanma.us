@@ -1,0 +1,1 @@
+Install nginx and place at `/etc/nginx`

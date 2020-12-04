@@ -1,0 +1,32 @@
+{
+  "name": "zhengyuanma.us",
+  "version": "1.0.0",
+  "description": "zhengyuanma.us",
+  "main": "node-server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/textangel/zhengyuanma.us.git"
+  },
+  "author": "Zhengyuan Ma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/textangel/zhengyuanma.us/issues"
+  },
+  "homepage": "https://github.com/textangel/zhengyuanma.us#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "handlebars": "^4.7.6",
+    "jade": "^1.11.0",
+    "node-html-parser": "^1.2.20",
+    "path": "^0.12.7",
+    "pug": "^3.0.0",
+    "socket.io": "^2.3.0"
+  }
+}

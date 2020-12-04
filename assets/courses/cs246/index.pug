@@ -1,0 +1,10 @@
+-var files=JSON.parse(files)
+-var base_path=base_path
+
+h2 CS246 - Data Mining
+p Listed below are my course notes for my Data Mining class.
+div#contentarea
+    ul
+        each file in files
+            li
+                a(href=base_path + file+ ".html")= file
