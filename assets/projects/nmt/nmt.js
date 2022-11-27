@@ -65,7 +65,7 @@ $nmt_input_box.keyup(delay(function(event){
 function getTranslationAPI(inputText) {
     var matchList = [];
     var request = new XMLHttpRequest();
-    var url = 'https://api.zhengyuanma.us/api/nmt/' + nmt_api_model + "/" + nmt_api_lang;
+    var url = 'https://www.zhengyuanma.us/api/nmt/' + nmt_api_model + "/" + nmt_api_lang;
     var params = "src_sent="+ encodeURI(inputText);
     request.open('GET', url + "?" + params, true);
     //Send the proper header information along with the request

@@ -198,7 +198,7 @@ var $acp_input_box = $('#project1_box'), // The box that the user types into
     }
 
  /* 3.2 Calling the API
-    The GPT2 Model is exposed on our app server at `https://api.zhengyuanma.us/api/gpt2_autocomplete/predict`
+    The GPT2 Model is exposed on our app server at `https://www.zhengyuanma.us/api/gpt2_autocomplete/predict`
  */
     function getMatchesAPI(inputText) {
         // Preprocess the text
@@ -208,7 +208,7 @@ var $acp_input_box = $('#project1_box'), // The box that the user types into
         //Set Up The Request
         var matchList = [];
         var request = new XMLHttpRequest();
-        var url = 'https://api.zhengyuanma.us/api/gpt2_autocomplete/predict'
+        var url = 'https://www.zhengyuanma.us/api/gpt2_autocomplete/predict'
         
         //Set up the response handler
         request.onreadystatechange = function() {

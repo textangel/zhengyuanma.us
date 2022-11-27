@@ -71,7 +71,7 @@ function getMatchesAPI(inputText) {
     console.log('last_tokens', last_tokens)
     var matchList = [];
     var request = new XMLHttpRequest();
-    var url = 'https://api.zhengyuanma.us/api/autocomplete/predict?text=' + encodeURIComponent(last_tokens);
+    var url = 'https://www.zhengyuanma.us/api/autocomplete/predict?text=' + encodeURIComponent(last_tokens);
     request.open('GET', url, true);
     request.send(null);
 

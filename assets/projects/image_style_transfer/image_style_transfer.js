@@ -112,7 +112,7 @@ function upload_images(){
 */
 var testAndRunStyleTransferAPI = function(base_src, style_src){
     var http = new XMLHttpRequest()
-    var path = 'https://api.zhengyuanma.us/api2/style_transfer_test/check_memory'
+    var path = 'https://www.zhengyuanma.us/api2/style_transfer_test/check_memory'
     var not_enough_memory_err =  "Too many people are using the application at the moment. \n Why don't you try again in a couple of minutes?"
     var application_down_err =  "The application seems to be unresponsive at the moment. We're working on getting it fixed!"
     http.onreadystatechange = function(err) {
@@ -144,7 +144,7 @@ var testAndRunStyleTransferAPI = function(base_src, style_src){
 */
 var runStyleTransferAPI = function(base_src, style_src){
     var httpPost = new XMLHttpRequest(),
-        path = 'https://api.zhengyuanma.us/api2/style_transfer_test/image_upload',
+        path = 'https://www.zhengyuanma.us/api2/style_transfer_test/image_upload',
         data = JSON.stringify({base_img: base_src, style_img: style_src});
     httpPost.onreadystatechange = function(err) {
         if (httpPost.readyState == 4){
